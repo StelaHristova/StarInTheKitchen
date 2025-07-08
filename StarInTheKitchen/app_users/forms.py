@@ -1,0 +1,96 @@
+from cloudinary import CloudinaryResource
+from django import forms
+from django.contrib.auth import forms as auth_forms, get_user_model
+from django.core.exceptions import ValidationError
+from PIL import Image
+from django.utils.translation import gettext_lazy as _
+
+from StarInTheKitchen.app_users.models import Profile
+
+UserModel = get_user_model()
+
+
+class AppUserForm(auth_forms.UserCreationForm):
+    first_name = forms.CharField(
+        max_length=150,
+        min_length=2
+    )
+
+    last_name = forms.CharField(
+        max_length=150,
+        min_length=2
+    )
+
+    class Meta:
+        model = UserModel
+        fields = ('email', 'first_name', 'last_name', 'password1', 'password2')
+        labels = {
+            "password2": "Confirm password"
+        }
+
+    def save(self, commit=True):
+        user = super().save(commit=commit)
+
+        first_name = self.cleaned_data['first_name']
+        last_name = self.cleaned_data['last_name']
+
+        profile = user.profile
+        profile.first_name = first_name
+        profile.last_name = last_name
+
+        profile.save()
+
+        return user
+
+
+class EditAppUserForm(forms.ModelForm):
+    email = forms.EmailField(required=False)
+
+    class Meta:
+        model = Profile
+        fields = ('first_name', 'last_name', 'email', 'date_of_register', 'profile_picture')
+
+        labels = {
+            'profile_picture': 'Change image'
+        }
+
+    def clean_profile_picture(self):
+        profile_picture = self.cleaned_data['profile_picture']
+
+        if isinstance(profile_picture, CloudinaryResource):
+            return profile_picture
+
+        try:
+            img = Image.open(profile_picture)
+            img.verify()
+
+            return profile_picture
+        except:
+            raise ValidationError('Profile picture needs to be an image.')
+
+    def save(self, commit=True):
+        profile = super().save(commit=commit)
+
+        user = profile.user
+        email = self.cleaned_data['email']
+        user.email = email
+
+        if commit:
+            user.save()
+
+        return profile
+
+
+class DeleteAppUserForm(forms.ModelForm):
+    email = forms.EmailField()
+
+    class Meta:
+        model = Profile
+        fields = ('first_name', 'last_name', 'date_of_register', 'email')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for field in self.fields:
+            self.fields[field].widget.attrs['readonly'] = 'readonly'
+            self.fields[field].disabled = 'disabled'
