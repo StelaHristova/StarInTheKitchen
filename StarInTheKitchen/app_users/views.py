@@ -1,9 +1,9 @@
 from django.contrib.auth import get_user_model, login
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.contrib.auth.views import LoginView
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, UpdateView, DetailView
+from django.views.generic import CreateView, UpdateView, DetailView, DeleteView
 
 from StarInTheKitchen.app_users.forms import AppUserForm, EditAppUserForm
 from StarInTheKitchen.app_users.models import Profile
@@ -17,6 +17,15 @@ class RegisterUserView(UserPassesTestMixin, CreateView):
     template_name = 'app_users/register_page.html'
     success_url = reverse_lazy('home-page')
 
+    def test_func(self):
+        if self.request.is_authenticated:
+            return False
+
+        return True
+
+    def handle_no_permission(self):
+        return redirect('home-page')
+
     def form_valid(self, form):
         response = super().form_valid(form)
 
@@ -28,6 +37,15 @@ class RegisterUserView(UserPassesTestMixin, CreateView):
 class LoginUserView(UserPassesTestMixin, LoginView):
     template_name = 'app_users/login_page.html'
     success_url = reverse_lazy('home-page')
+
+    def test_func(self):
+        if self.request.user.is_authenticated:
+            return False
+
+        return True
+
+    def handle_no_permission(self):
+        return redirect('home-page')
 
 
 class ProfileView(LoginRequiredMixin, UpdateView, DetailView):
@@ -42,14 +60,23 @@ class ProfileView(LoginRequiredMixin, UpdateView, DetailView):
 
         return ['app_users/profile_page.html']
 
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#
-#         context['form'].fields['email'].initial = self.request.user.email
-#         context['emergency_events'] = get_emergency_events()
-#         context['video_url'] = config('VIDEO_URL')
-#
-#         return context
+
+class ProfileDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Profile
+    template_name = 'app_users/delete_profile.html'
+    success_url = reverse_lazy('login')
+
+    def test_func(self):
+        profile = get_object_or_404(Profile, pk=self.kwargs['pk'])
+        return self.request.user == profile.user
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #
+    #     context['form'].fields['email'].initial = self.request.user.email
+    #     context['emergency_events'] = get_emergency_events()
+    #     context['video_url'] = config('VIDEO_URL')
+    #
+    #     return context
 #
 #     def get_success_url(self):
 #         return reverse_lazy('profile-details-update', kwargs={

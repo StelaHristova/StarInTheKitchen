@@ -59,7 +59,6 @@ class EditAppUserForm(forms.ModelForm):
 
         if isinstance(profile_picture, CloudinaryResource):
             return profile_picture
-
         try:
             img = Image.open(profile_picture)
             img.verify()
