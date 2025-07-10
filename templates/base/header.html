@@ -1,48 +1,137 @@
 {% load static %}
-   <!-- header section strats -->
+<div class="hero_area">
+    <!-- header section strats -->
     <header class="header_section">
-      <div class="container-fluid">
-        <nav class="navbar navbar-expand-lg custom_nav-container">
-          <a class="navbar-brand" href="{% static 'index.html' %}">
-              <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
+        <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg custom_nav-container">
+                <a class="navbar-brand" href="index.html">
             <span>
               Star in the kitchen
             </span>
-          </a>
-          <div class="" id="">
-            <div class="User_option">
-              <a href="">
-                <i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i>
-                <span>Log In</span>
-              </a>
-                
-                 <a href="">
-                <i class="fa-solid fa-user-plus" aria-hidden="true"></i>
-                <span>Sign Up</span>
-              </a>
-{#              <form class="form-inline ">#}
-{#                <input type="search" placeholder="Search" />#}
-{#                <button class="btn  nav_search-btn" type="submit">#}
-{#                  <i class="fa fa-search" aria-hidden="true"></i>#}
-{#                </button>#}
-{#              </form>#}
-            </div>
-{#            <div class="custom_menu-btn">#}
-{#              <button onclick="openNav()">#}
-{#                <img src="{% static 'images/menu.png' %}" alt="">#}
-{#              </button>#}
-{#            </div>#}
-{#            <div id="myNav" class="overlay">#}
-{#              <div class="overlay-content">#}
-{#                <a href="index.html">Home</a>#}
-{#                <a href="about.html">About</a>#}
-{#                <a href="blog.html">Blog</a>#}
-{#                <a href="testimonial.html">Testimonial</a>#}
-{#              </div>#}
-{#            </div>#}
-          </div>
-        </nav>
-      </div>
+                </a>
+                <div class="" id="">
+                    <div class="User_option">
+                        <div class="" id="">
+                            <div class="User_option">
+                                <a href="">
+                                    <i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i>
+                                    <span>Log In</span>
+                                </a>
+
+                                <a href="">
+                                    <i class="fa-solid fa-user-plus" aria-hidden="true"></i>
+                                    <span>Sign Up</span>
+                                </a>
+
+                            </div>
+                        </div>
+                     
+                    </div>
+                    <div class="custom_menu-btn">
+                        <button onclick="openNav()">
+                            <img src="{% static 'images/menu.png' %}" alt="">
+                        </button>
+                    </div>
+                    <div id="myNav" class="overlay">
+                        <div class="overlay-content">
+                            <a href="index.html">Home</a>
+                            <a href="about.html">About</a>
+                            <a href="blog.html">Blog</a>
+                            <a href="testimonial.html">Testimonial</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
     </header>
     <!-- end header section -->
+
+    <!-- slider section -->
+    <section class="slider_section ">
+        <div class="container ">
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <div class="detail-box">
+                        <h1>
+                            Discover Amazing Recipes
+                        </h1>
+                        <p>
+                           Explore meals by season, diet, method and more - all shared by home chefs like you
+                        </p>
+                    </div>
+                    <div class="find_container ">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <form>
+                                        <div class="form-row ">
+                                            <div class="form-group col-lg-5">
+                                                <input type="text" class="form-control" id="inputHotel"
+                                                       placeholder="Search by recipe name">
+                                            </div>
+                                            <div class="form-group col-lg-3">
+                                                <input type="text" class="form-control" id="inputLocation"
+                                                       placeholder="Select category">
+                                                <span class="location_icon">
+                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                          </span>
+                                            </div>
+                                            <div class="form-group col-lg-3">
+                                                <div class="btn-box">
+                                                    <button type="submit" class="btn ">Find Recipes</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slider_container">
+            <div class="item">
+                <div class="img-box">
+                    <img src="{% static 'images/slider-img1.png' %}" alt=""/>
+                </div>
+            </div>
+            <div class="item">
+                <div class="img-box">
+                    <img src="{% static 'images/slider-img2.png' %}" alt=""/>
+                </div>
+            </div>
+            <div class="item">
+                <div class="img-box">
+                    <img src="{% static 'images/slider-img3.png' %}" alt=""/>
+                </div>
+            </div>
+            <div class="item">
+                <div class="img-box">
+                    <img src="{% static 'images/slider-img4.png' %}" alt=""/>
+                </div>
+            </div>
+            <div class="item">
+                <div class="img-box">
+                    <img src="{% static 'images/slider-img1.png' %}" alt=""/>
+                </div>
+            </div>
+            <div class="item">
+                <div class="img-box">
+                    <img src="{% static 'images/slider-img2.png' %}" alt=""/>
+                </div>
+            </div>
+            <div class="item">
+                <div class="img-box">
+                    <img src="{% static 'images/slider-img3.png' %}" alt=""/>
+                </div>
+            </div>
+            <div class="item">
+                <div class="img-box">
+                    <img src="{% static 'images/slider-img4.png' %}" alt=""/>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- end slider section -->
+</div>
