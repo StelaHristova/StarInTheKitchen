@@ -112,14 +112,14 @@ a:focus {
           flex-direction: column;
   background-image: url(../images/hero-bg.jpg);
   background-size: cover;
-  background-position: center bottom;
+  background-position: top;
   background-repeat: no-repeat;
 }
 
-.sub_page .hero_area {
-  background-size: cover;
-  background-position: top;
-}
+/*.sub_page .hero_area {*/
+/*  background-size: cover;*/
+/*  background-position: center bottom;*/
+/*}*/
 
 .header_section {
   padding: 15px 0;
@@ -263,9 +263,13 @@ a:focus {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  padding-top: 75px;
-  padding-bottom: 425px;
+  padding-top: 42px;
+  padding-bottom: 325px;
   position: relative;
+  background-image: url(../images/hero-bg.jpg);
+  background-size: cover;
+  background-position: center bottom;
+  background-repeat: no-repeat;
 }
 
 .slider_section .row {
