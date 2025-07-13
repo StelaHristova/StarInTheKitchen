@@ -702,13 +702,10 @@ a:focus {
 }
 
 .footer_container {
-  background-image: url(../images/footer-bg.png);
   background-size: 100%;
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: top;
-  padding-top: 245px;
-  margin-top: -175px;
 }
 
 .info_section {
@@ -787,18 +784,30 @@ a:focus {
 
 /* footer section*/
 .footer_section {
-  position: relative;
-  text-align: center;
   background-color: #070e6a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
 }
 
 .footer_section p {
   color: #ffffff;
-  padding-bottom: 25px;
-  margin: 0;
+  text-align: center;
 }
 
 .footer_section p a {
   color: inherit;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 100vh;
+}
+
+.page {
+  flex: 1
 }
 /*# sourceMappingURL=style.css.map */
