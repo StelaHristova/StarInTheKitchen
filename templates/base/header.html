@@ -25,7 +25,7 @@
 
                             </div>
                         </div>
-                     
+
                     </div>
                     <div class="custom_menu-btn">
                         <button onclick="openNav()">
@@ -46,8 +46,9 @@
     </header>
     <!-- end header section -->
 
+    {% if not request.user.is_authenticated %}
     <!-- slider section -->
-    <section class="slider_section ">
+        <section class="slider_section ">
         <div class="container ">
             <div class="row">
                 <div class="col-lg-10 mx-auto">
@@ -56,7 +57,7 @@
                             Discover Amazing Recipes
                         </h1>
                         <p>
-                           Explore meals by season, diet, method and more - all shared by home chefs like you
+                            Explore meals by season, diet, method and more - all shared by home chefs like you
                         </p>
                     </div>
                     <div class="find_container ">
@@ -134,4 +135,6 @@
         </div>
     </section>
     <!-- end slider section -->
+    {% endif %}
+    
 </div>

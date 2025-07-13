@@ -1,4 +1,4 @@
-from django.contrib.auth import get_user_model, login
+from django.contrib.auth import get_user_model, login, logout
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.shortcuts import redirect, get_object_or_404
@@ -18,7 +18,7 @@ class RegisterUserView(UserPassesTestMixin, CreateView):
     success_url = reverse_lazy('home-page')
 
     def test_func(self):
-        if self.request.is_authenticated:
+        if self.request.user.is_authenticated:
             return False
 
         return True
@@ -60,23 +60,21 @@ class ProfileView(LoginRequiredMixin, UpdateView, DetailView):
 
         return ['app_users/profile_page.html']
 
+    def get_success_url(self):
+        return reverse_lazy('profile-details-update', kwargs={
+            'pk': self.object.id
+        })
+
 
 class ProfileDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Profile
     template_name = 'app_users/delete_profile.html'
-    success_url = reverse_lazy('login')
+    success_url = reverse_lazy('home-page')
 
     def test_func(self):
         profile = get_object_or_404(Profile, pk=self.kwargs['pk'])
         return self.request.user == profile.user
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #
-    #     context['form'].fields['email'].initial = self.request.user.email
-    #     context['emergency_events'] = get_emergency_events()
-    #     context['video_url'] = config('VIDEO_URL')
-    #
-    #     return context
+
 #
 #     def get_success_url(self):
 #         return reverse_lazy('profile-details-update', kwargs={
@@ -96,19 +94,16 @@ class ProfileDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 #         request.user.delete()
 #         return redirect('home-page')
 #
-#     context = {
-#         'form': form,
-#         'emergency_events': get_emergency_events(),
-#         'video_url': config('VIDEO_URL')
-#     }
 #
 #     return render(request, 'app_users/delete_profile.html', context=context)
 #
+
+
 #
-# def logout_view(request):
-#     if request.user.is_authenticated:
-#         logout(request)
-#
-#     return redirect('home-page')
+def logout_view(request):
+    if request.user.is_authenticated:
+        logout(request)
+
+    return redirect('home-page')
 #
 #
