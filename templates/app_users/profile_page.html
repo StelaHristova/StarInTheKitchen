@@ -1,55 +1,55 @@
-{#{% extends  'index.html' %}#}
-{#{% load static %}#}
-{##}
-{#{% block content %}#}
-{#    <div class="content-edit">#}
-{#        <section class="info-section">#}
-{#            <div class="left">#}
-{#                <div class="img-container">#}
-{#                    <img src="{{ object.profile_image.url }}" alt="user-profile-picture">#}
-{#                </div>#}
-{##}
-{#                <div class="user-info">#}
-{#                    <p class="name">{{ object.full_name }}</p>#}
-{#                </div>#}
-{#            </div>#}
-{##}
-{#            <div class="right">#}
-{#                <h3>{{ object.full_name }}'s Account</h3>#}
-{##}
-{#                <section class="profile-info">#}
-{##}
-{#                    <section class="all-fields">#}
-{#                        <div class="field">#}
-{#                            <label>First Name</label>#}
-{#                            {% if object.first_name %}#}
-{#                                <p>{{ object.first_name }}</p>#}
-{#                            {% else %}#}
-{#                                <p>No first name yet</p>#}
-{#                            {% endif %}#}
-{#                        </div>#}
-{##}
-{#                        <div class="field">#}
-{#                            <label>Last Name</label>#}
-{#                            {% if object.last_name %}#}
-{#                                <p>{{ object.last_name }}</p>#}
-{#                            {% else %}#}
-{#                                <p>No last name yet</p>#}
-{#                            {% endif %}#}
-{#                        </div>#}
-{#                        #}
-{#                        <div class="field">#}
-{#                            <label>Email</label>#}
-{#                            {% if object.user.email %}#}
-{#                                <p>{{ object.user.email }}</p>#}
-{#                            {% else %}#}
-{#                                <p>No email yet</p>#}
-{#                            {% endif %}#}
-{#                        </div>#}
-{#                    </section>#}
-{##}
-{#                </section>#}
-{#            </div>#}
-{#        </section>#}
-{#    </div>#}
-{#{% endblock %}#}
+{% extends  'index.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="content-edit">
+        <section class="info-section">
+            <div class="left">
+                <div class="img-container">
+                    <img src="{{ object.profile_image.url }}" alt="user-profile-picture">
+                </div>
+
+                <div class="user-info">
+                    <p class="name">{{ object.full_name }}</p>
+                </div>
+            </div>
+
+            <div class="right">
+                <h3>{{ object.full_name }}'s Account</h3>
+
+                <section class="profile-info">
+
+                    <section class="all-fields">
+                        <div class="field">
+                            <label>First Name</label>
+                            {% if object.first_name %}
+                                <p>{{ object.first_name }}</p>
+                            {% else %}
+                                <p>No first name yet</p>
+                            {% endif %}
+                        </div>
+
+                        <div class="field">
+                            <label>Last Name</label>
+                            {% if object.last_name %}
+                                <p>{{ object.last_name }}</p>
+                            {% else %}
+                                <p>No last name yet</p>
+                            {% endif %}
+                        </div>
+
+                        <div class="field">
+                            <label>Email</label>
+                            {% if object.user.email %}
+                                <p>{{ object.user.email }}</p>
+                            {% else %}
+                                <p>No email yet</p>
+                            {% endif %}
+                        </div>
+                    </section>
+
+                </section>
+            </div>
+        </section>
+    </div>
+{% endblock %}

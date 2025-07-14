@@ -94,7 +94,7 @@ WSGI_APPLICATION = 'StarInTheKitchen.wsgi.application'
 
 DATABASES = {
     "default": {
-         "ENGINE": "django.db.backends.postgresql",
+        "ENGINE": "django.db.backends.postgresql",
         "NAME": os.getenv('DB_NAME', config('DB_NAME')),
         "USER": os.getenv('DB_USER', config('DB_USER')),
         "PASSWORD": os.getenv('DB_PASS', config('DB_PASS')),
@@ -161,5 +161,6 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'app_users.AppUser'
-# LOGIN_REDIRECT_URL = reverse_lazy('home')
+LOGIN_URL = reverse_lazy('login-user')
+LOGIN_REDIRECT_URL = reverse_lazy('home-page')
 # LOGOUT_REDIRECT_URL = reverse_lazy('login')

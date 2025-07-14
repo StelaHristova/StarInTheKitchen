@@ -15,4 +15,5 @@ def create_profile(sender, instance, created, **kwargs):
         profile.save()
 
         group = Group.objects.filter(name='regular_users').first()
-        instance.group.add(group)
+        if group:
+            instance.group.add(group)
