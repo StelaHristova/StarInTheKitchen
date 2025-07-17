@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from cloudinary.models import CloudinaryField
 
 from StarInTheKitchen.categories.models import MealType, Season, Diet, CookingMethod, Occasion
 
@@ -12,8 +13,8 @@ class Recipe(models.Model):
     ingredients = models.TextField()
     description = models.TextField()
     instructions = models.TextField()
-    image = models.ImageField(
-        upload_to='recipes/',
+    image = CloudinaryField(
+        'image',
         blank=True,
         null=True
     )

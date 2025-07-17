@@ -42,9 +42,10 @@ PROJECT_MADE_APPS = [
     'StarInTheKitchen.categories',
     'StarInTheKitchen.favourites',
     'StarInTheKitchen.home',
+    'StarInTheKitchen.ingredients',
     'StarInTheKitchen.recipes',
     'StarInTheKitchen.reviews',
-    
+
     'cloudinary',
     'cloudinary_storage',
 ]
@@ -150,6 +151,7 @@ cloudinary.config(
     api_key=config('CLOUDINARY_API_KEY'),
     api_secret=config('CLOUDINARY_API_SECRET')
 )
+
 MEDIA_URL = 'media/'
 # MEDIA_ROOT = BASE_DIR / 'mediafiles'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'

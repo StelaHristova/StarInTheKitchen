@@ -1,10 +1,11 @@
+from cloudinary.models import CloudinaryField
 from django.core import validators
 from django.db import models
 
 
-# Create your models here.
-class MealType(models.Model):
+class BaseCategory(models.Model):
     name = models.CharField(
+        max_length=50,
         unique=True,
         null=False,
         blank=False,
@@ -12,69 +13,30 @@ class MealType(models.Model):
             validators.MinLengthValidator(3, message="Category name needs to be at least 3 characters long.")
         ]
     )
+    image = CloudinaryField('image', blank=True, null=True)
+
+    class Meta:
+        abstract = True
 
     def __str__(self):
         return self.name
 
 
-class Season(models.Model):
-    name = models.CharField(
-        unique=True,
-        null=False,
-        blank=False,
-        validators=[
-            validators.MinLengthValidator(3, message="Category name needs to be at least 3 characters long.")
-        ]
-    )
-
-    def __str__(self):
-        return self.name
+class MealType(BaseCategory):
+    pass
 
 
-class Diet(models.Model):
-    name = models.CharField(
-        unique=True,
-        null=False,
-        blank=False,
-        validators=[
-            validators.MinLengthValidator(3, message="Category name needs to be at least 3 characters long.")
-        ]
-    )
-
-    def __str__(self):
-        return self.name
+class Season(BaseCategory):
+    pass
 
 
-class CookingMethod(models.Model):
-    name = models.CharField(
-        unique=True,
-        null=False,
-        blank=False,
-        validators=[
-            validators.MinLengthValidator(3, message="Category name needs to be at least 3 characters long.")
-        ]
-    )
-
-    def __str__(self):
-        return self.name
+class Diet(BaseCategory):
+    pass
 
 
-class Occasion(models.Model):
-    name = models.CharField(
-        unique=True,
-        null=False,
-        blank=False,
-        validators=[
-            validators.MinLengthValidator(3, message="Category name needs to be at least 3 characters long.")
-        ]
-    )
-
-    def __str__(self):
-        return self.name
+class CookingMethod(BaseCategory):
+    pass
 
 
-
-
-
-
-
+class Occasion(BaseCategory):
+    pass
