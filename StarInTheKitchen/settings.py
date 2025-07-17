@@ -42,7 +42,6 @@ PROJECT_MADE_APPS = [
     'StarInTheKitchen.categories',
     'StarInTheKitchen.favourites',
     'StarInTheKitchen.home',
-    'StarInTheKitchen.ingredients',
     'StarInTheKitchen.recipes',
     'StarInTheKitchen.reviews',
 

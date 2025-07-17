@@ -8,8 +8,8 @@ class RecipeForm(forms.ModelForm):
         model = Recipe
         fields = [
             'title',
-            'ingredients',
             'description',
+            'ingredients',
             'instructions',
             'image',
             'prep_time',
@@ -26,3 +26,7 @@ class RecipeForm(forms.ModelForm):
             'description': Textarea(attrs={'rows': 3}),
             'instructions': Textarea(attrs={'rows': 6}),
         }
+
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     self.fields['description'].required = False

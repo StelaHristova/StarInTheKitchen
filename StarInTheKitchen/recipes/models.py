@@ -10,8 +10,15 @@ class Recipe(models.Model):
     title = models.CharField(
         max_length=200,
     )
-    ingredients = models.TextField()
-    description = models.TextField()
+    description = models.TextField(
+        blank=True,
+        null=True
+    )
+    ingredients = models.TextField(
+        blank=True,
+        null=True,
+        help_text="Enter one ingredient per line, like:\n200g flour"
+    )
     instructions = models.TextField()
     image = CloudinaryField(
         'image',

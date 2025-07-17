@@ -1,17 +1,15 @@
 
 from django.forms import inlineformset_factory
 from django.db.models import Q
-from django.http import Http404
+from django.http import Http404, HttpResponseForbidden
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 
 
 from .models import Recipe
 from .forms import RecipeForm
-from StarInTheKitchen.ingredients.models import Ingredient
-from StarInTheKitchen.ingredients.forms import IngredientForm
 
 
 class RecipeListView(ListView):
@@ -50,36 +48,23 @@ class RecipeCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse_lazy('recipe-detail', kwargs={'pk': self.object.pk})
 
-    def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
-        IngredientFormSet = inlineformset_factory(
-            Recipe,
-            Ingredient,
-            form=IngredientForm,
-            extra=1,
-            can_delete=True
-        )
-        if self.request.POST:
-            data['ingredients'] = IngredientFormSet(self.request.POST)
-        else:
-            data['ingredients'] = IngredientFormSet()
-        return data
-
     def form_valid(self, form):
-        context = self.get_context_data()
-        ingredients = context['ingredients']
         form.instance.created_by = self.request.user
-        self.object = form.save()
-
-        if ingredients.is_valid():
-            ingredients.instance = self.object
-            ingredients.save()
-        else:
-            return self.form_invalid(form)
-
         return super().form_valid(form)
 
-    def form_invalid(self, form):
-        context = self.get_context_data(form=form)
-        return self.render_to_response(context)
 
+class RecipeUpdateView(LoginRequiredMixin, UpdateView):
+    model = Recipe
+    form_class = RecipeForm
+    template_name = 'recipes/recipe_form.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        recipe = self.get_object()
+
+        if recipe.is_approved:
+            return HttpResponseForbidden("You cannot edit an approved recipe.")
+
+        if recipe.created_by != self.request.user:
+            return HttpResponseForbidden("You can only edit your own recipes.")
+
+        return super().dispatch(request, *args, **kwargs)
