@@ -48,11 +48,17 @@ class EditAppUserForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ('first_name', 'last_name', 'email', 'date_of_register', 'profile_picture')
+        fields = ('first_name', 'last_name', 'profile_picture')
 
         labels = {
             'profile_picture': 'Change image'
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        if self.instance and self.instance.user:
+            self.fields['email'].initial = self.instance.user.email
 
     def clean_profile_picture(self):
         profile_picture = self.cleaned_data['profile_picture']
@@ -68,14 +74,16 @@ class EditAppUserForm(forms.ModelForm):
             raise ValidationError('Profile picture needs to be an image.')
 
     def save(self, commit=True):
-        profile = super().save(commit=commit)
+        profile = super().save(commit=False)
 
         user = profile.user
-        email = self.cleaned_data['email']
-        user.email = email
+        email = self.cleaned_data.get('email')
+        if email:
+            user.email = email
+            user.save()
 
         if commit:
-            user.save()
+            profile.save()
 
         return profile
 
@@ -85,7 +93,7 @@ class DeleteAppUserForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ('first_name', 'last_name', 'date_of_register', 'email')
+        fields = ('first_name', 'last_name')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

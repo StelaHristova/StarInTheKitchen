@@ -6,15 +6,17 @@ from StarInTheKitchen.recipes.models import Recipe
 class Favourite(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='favourites'
     )
 
     recipe = models.ForeignKey(
         Recipe,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='favourited_by'
     )
 
-    added_on = models.DateTimeField(
+    created_at = models.DateTimeField(
         auto_now_add=True
     )
 
@@ -22,4 +24,4 @@ class Favourite(models.Model):
         unique_together = ('user', 'recipe')
 
     def __str__(self):
-        return f"{self.user.username} → {self.recipe.title}"
+        return f"{self.user} → {self.recipe.title}"

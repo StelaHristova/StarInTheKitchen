@@ -10,6 +10,8 @@ from django.urls import reverse_lazy
 
 from .models import Recipe
 from .forms import RecipeForm
+from ..reviews.forms import ReviewForm
+from ..reviews.models import Review
 
 
 class RecipeListView(ListView):
@@ -37,6 +39,32 @@ class RecipeDetailView(DetailView):
         if not obj.is_approved and obj.created_by != self.request.user:
             raise Http404("This recipe is not available.")
         return obj
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        recipe = self.object
+
+        if self.request.user.is_authenticated:
+            context['is_favourited'] = recipe.favourited_by.filter(user=self.request.user).exists()
+
+            try:
+                review = Review.objects.get(user=self.request.user, recipe=recipe)
+                context['review_form'] = ReviewForm(instance=review)
+            except Review.DoesNotExist:
+                context['review_form'] = ReviewForm()
+        else:
+            context['is_favourited'] = False
+
+        return context
+    #     context = super().get_context_data(**kwargs)
+    #     recipe = self.object
+    #
+    #     if self.request.user.is_authenticated:
+    #         context['is_favourited'] = recipe.favourited_by.filter(user=self.request.user).exists()
+    #     else:
+    #         context['is_favourited'] = False
+    #
+    #     return context
 
 
 class RecipeCreateView(LoginRequiredMixin, CreateView):

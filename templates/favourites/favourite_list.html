@@ -1,0 +1,19 @@
+{% extends 'index.html' %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h2>My Favourite Recipes</h2>
+
+    {% if favourites %}
+      <ul>
+        {% for fav in favourites %}
+          <li>
+            <a href="{% url 'recipe-detail' fav.recipe.pk %}">{{ fav.recipe.title }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>You haven’t favourited any recipes yet.</p>
+    {% endif %}
+  </div>
+{% endblock %}

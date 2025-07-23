@@ -51,19 +51,32 @@ class LoginUserView(UserPassesTestMixin, LoginView):
 class ProfileView(LoginRequiredMixin, UpdateView, DetailView):
     model = Profile
     form_class = EditAppUserForm
+    template_name = 'app_users/profile_page.html'
 
     def get_template_names(self):
         user = self.request.user
 
-        if user.profile.id == self.kwargs['pk']:
-            return ['app_users/edit_profile.html']
+        if self.request.user.pk == self.kwargs['pk']:
+            # return ['app_users/edit_profile.html']
 
-        return ['app_users/profile_page.html']
+            return ['app_users/profile_page.html']
 
     def get_success_url(self):
         return reverse_lazy('profile-details-update', kwargs={
             'pk': self.object.id
         })
+
+
+class ProfileUpdateView(LoginRequiredMixin, UpdateView):
+    model = Profile
+    form_class = EditAppUserForm
+    template_name = 'app_users/edit_profile.html'
+
+    def get_object(self, queryset=None):
+        return self.request.user.profile
+
+    def get_success_url(self):
+        return reverse_lazy('profile-details', kwargs={'pk': self.request.user.pk})
 
 
 class ProfileDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
@@ -72,7 +85,10 @@ class ProfileDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     success_url = reverse_lazy('home-page')
 
     def test_func(self):
-        profile = get_object_or_404(Profile, pk=self.kwargs['pk'])
+        pk = self.kwargs['pk']
+        if not pk:
+            return False
+        profile = get_object_or_404(Profile, pk=pk)
         return self.request.user == profile.user
 
 #

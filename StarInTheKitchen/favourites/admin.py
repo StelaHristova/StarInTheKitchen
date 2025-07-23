@@ -1,3 +1,5 @@
 from django.contrib import admin
 
-# Register your models here.
+from StarInTheKitchen.favourites.models import Favourite
+
+admin.site.register(Favourite)

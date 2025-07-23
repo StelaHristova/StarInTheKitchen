@@ -40,6 +40,7 @@ class Profile(models.Model):
     date_of_register = models.DateField(
         blank=True,
         null=True,
+        auto_now_add=True,
     )
 
     profile_picture = CloudinaryField(
