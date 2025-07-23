@@ -46,6 +46,7 @@ class RecipeDetailView(DetailView):
 
         if self.request.user.is_authenticated:
             context['is_favourited'] = recipe.favourited_by.filter(user=self.request.user).exists()
+            context['can_review'] = recipe.created_by != self.request.user
 
             try:
                 review = Review.objects.get(user=self.request.user, recipe=recipe)
@@ -54,6 +55,7 @@ class RecipeDetailView(DetailView):
                 context['review_form'] = ReviewForm()
         else:
             context['is_favourited'] = False
+            context['can_review'] = False
 
         return context
     #     context = super().get_context_data(**kwargs)
@@ -96,3 +98,6 @@ class RecipeUpdateView(LoginRequiredMixin, UpdateView):
             return HttpResponseForbidden("You can only edit your own recipes.")
 
         return super().dispatch(request, *args, **kwargs)
+
+    def get_success_url(self):
+        return reverse_lazy('recipe-detail', kwargs={'pk': self.object.pk})
