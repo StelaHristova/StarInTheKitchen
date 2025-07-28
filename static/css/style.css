@@ -360,7 +360,10 @@ a:focus {
   position: absolute;
   z-index: 2;
   bottom: 0;
-  width: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  max-height: 240px;
 }
 
 .slider_section .slider_container .slick-list {

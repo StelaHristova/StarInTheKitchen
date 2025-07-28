@@ -4,61 +4,60 @@
 {% block content %}
     <div class="content-edit">
         <section class="info-section">
-            <div class="left">
-                <div class="img-container">
+            <div class="container">
+                <div class="img-container mt-5">
                     {% if object.profile_picture %}
-                        <img src="{{ object.profile_picture.url }}" alt="user-profile-picture">
+                        <img  class="img-fluid rounded"  style="height: 200px; width: auto" src="{{ object.profile_picture.url }}" alt="user-profile-picture">
                     {% else %}
-                        <img src="{% static 'images/default-user.jpg' %}" alt="default-user-picture">
+                        <img  class="img-fluid rounded" src="{% static 'images/default-user.jpg' %}" alt="default-user-picture">
                     {% endif %}
 
                 </div>
-
-                <div class="user-info">
-                    <p class="name">{{ object.get_full_name }}</p>
-                </div>
+            <hr/>
             </div>
 
-            <div class="right">
+            <div class="container">
                 <h3>{{ object.get_full_name }}'s Account</h3>
 
                 <section class="profile-info">
                     {% if user.is_authenticated and user.pk == object.pk %}
-                        <div class="mt-4">
+                        <div class="my-4">
                             <a href="{% url 'edit-profile' %}" class="btn btn-outline-primary me-2">Edit Profile</a>
-                            <a href="{% url 'delete-profile' object.pk %}" class="btn btn-outline-danger">Delete Profile</a>
+                            <a href="{% url 'delete-profile' object.pk %}" class="btn btn-outline-danger">Delete
+                                Profile</a>
                         </div>
                     {% endif %}
-                    <section class="all-fields">
-                        <div class="field">
-                            <label>First Name</label>
-                            {% if object.first_name %}
-                                <p>{{ object.first_name }}</p>
-                            {% else %}
-                                <p>No first name yet</p>
-                            {% endif %}
-                        </div>
+                    <fieldset disabled>
+                        <section class="all-fields">
+                            <div class="mb-3">
+                                <label for="disabledTextInput" class="form-label">First Name</label>
+                                <input type="text" id="disabledTextInput" class="form-control"
+                                       placeholder={% if object.first_name %}
+                                           {{ object.first_name }}
+                                       {% else %}
+                                           "No first name yet"
+                                       {% endif %}>
+                            </div>
 
-                        <div class="field">
-                            <label>Last Name</label>
-                            {% if object.last_name %}
-                                <p>{{ object.last_name }}</p>
-                            {% else %}
-                                <p>No last name yet</p>
-                            {% endif %}
-                        </div>
+                            <div class="mb-3">
+                                <label for="disabledTextInput" class="form-label">Last Name</label>
+                                <input type="text" id="disabledTextInput" class="form-control"
+                                       placeholder={% if object.last_name %}
+                                           {{ object.last_name }}
+                                       {% else %}
+                                           "No last name yet"
+                                       {% endif %}>
+                            </div>
 
-                        <div class="field">
-                            <label>Email</label>
-{#                            {% if object.user.email %}#}
-                                <p>{{ object.user.email }}</p>
-{#                            {% else %}#}
-{#                                <p>No email yet</p>#}
-{#                            {% endif %}#}
-                        </div>
-                    </section>
-
+                            <div class="mb-3">
+                                <label for="disabledTextInput" class="form-label">Email</label>
+                                <input type="text" id="disabledTextInput" class="form-control"
+                                       placeholder={{ object.user.email }}>
+                            </div>
+                        </section>
+                    </fieldset>
                 </section>
+
             </div>
         </section>
     </div>
