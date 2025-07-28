@@ -155,6 +155,7 @@ MEDIA_URL = 'media/'
 # MEDIA_ROOT = BASE_DIR / 'mediafiles'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
+DEFAULT_PROFILE_IMAGE = config('DEFAULT_PROFILE_IMAGE')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -164,4 +165,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'app_users.AppUser'
 LOGIN_URL = reverse_lazy('login-user')
 LOGIN_REDIRECT_URL = reverse_lazy('home-page')
-# LOGOUT_REDIRECT_URL = reverse_lazy('login')
+LOGOUT_REDIRECT_URL = reverse_lazy('login')

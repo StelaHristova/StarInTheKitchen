@@ -21,11 +21,35 @@ class RecipeListView(ListView):
 
     def get_queryset(self):
         user = self.request.user
+        queryset = Recipe.objects.filter(is_approved=True)
+
         if user.is_authenticated:
             return Recipe.objects.filter(
                 Q(is_approved=True) | Q(created_by=user)
             ).distinct()
-        return Recipe.objects.filter(is_approved=True)
+
+        query = self.request.GET.get('q')
+        if query:
+            queryset = queryset.filter(title__icontains=query)
+
+        meal_type = self.request.GET.get('meal_type')
+        season = self.request.GET.get('season')
+        diet = self.request.GET.get('diet')
+        method = self.request.GET.get('method')
+        occasion = self.request.GET.get('occasion')
+
+        if meal_type:
+            queryset = queryset.filter(meal_type_id=meal_type)
+        if season:
+            queryset = queryset.filter(season_id=season)
+        if diet:
+            queryset = queryset.filter(diet_id=diet)
+        if method:
+            queryset = queryset.filter(method_id=method)
+        if occasion:
+            queryset = queryset.filter(occasion_id=occasion)
+
+        return queryset
 
 
 class RecipeDetailView(DetailView):

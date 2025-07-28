@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth import get_user_model, login, logout
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.contrib.auth.views import LoginView
@@ -78,6 +79,10 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('profile-details', kwargs={'pk': self.request.user.pk})
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['default_profile_image_id'] = settings.DEFAULT_PROFILE_IMAGE
+        return context
 
 class ProfileDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Profile

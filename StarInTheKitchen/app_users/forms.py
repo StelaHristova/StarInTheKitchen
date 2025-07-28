@@ -3,10 +3,11 @@ from django import forms
 from django.contrib.auth import forms as auth_forms, get_user_model
 from django.core.exceptions import ValidationError
 from PIL import Image
+from django.forms import ClearableFileInput
 from django.utils.translation import gettext_lazy as _
-
+from StarInTheKitchen.app_users.widgets import CustomClearableFileInput
 from StarInTheKitchen.app_users.models import Profile
-
+import cloudinary.uploader
 UserModel = get_user_model()
 
 
@@ -49,7 +50,9 @@ class EditAppUserForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('first_name', 'last_name', 'profile_picture')
-
+        widgets = {
+            'profile_picture': ClearableFileInput(),
+        }
         labels = {
             'profile_picture': 'Change image'
         }
@@ -60,8 +63,23 @@ class EditAppUserForm(forms.ModelForm):
         if self.instance and self.instance.user:
             self.fields['email'].initial = self.instance.user.email
 
+        profile_pic = self.instance.profile_picture
+        is_default = False
+        if profile_pic and hasattr(profile_pic, 'public_id'):
+            is_default = 'default_profile_picture' in profile_pic.public_id or "default-user" in profile_pic.public_id
+        self.fields['profile_picture'].widget = CustomClearableFileInput(is_default=is_default)
+        # if self.instance.profile_picture and 'default_profile_picture' in str(self.instance.profile_picture):
+        #     self.fields['profile_picture'].widget.clear_checkbox_label = ''
+        #     self.fields['profile_picture'].widget.attrs['hidden-clear'] = 'true'
+
     def clean_profile_picture(self):
         profile_picture = self.cleaned_data['profile_picture']
+
+        if profile_picture is False:
+            return False
+
+        if not profile_picture:
+            return self.instance.profile_picture
 
         if isinstance(profile_picture, CloudinaryResource):
             return profile_picture
@@ -78,9 +96,27 @@ class EditAppUserForm(forms.ModelForm):
 
         user = profile.user
         email = self.cleaned_data.get('email')
+
         if email:
             user.email = email
             user.save()
+
+        new_picture = self.cleaned_data.get('profile_picture')
+        old_picture = self.instance.profile_picture
+
+        if new_picture is False:
+            if old_picture and hasattr(old_picture,
+                                       'public_id') and 'default_profile_picture' not in old_picture.public_id:
+                cloudinary.uploader.destroy(old_picture.public_id)
+            profile.profile_picture = None
+
+        elif new_picture and new_picture != old_picture:
+            if old_picture and hasattr(old_picture,
+                                       'public_id') and 'default_profile_picture' not in old_picture.public_id:
+                cloudinary.uploader.destroy(old_picture.public_id)
+
+        # if self.cleaned_data.get('profile_picture') is False:
+        #     profile.profile_picture = None
 
         if commit:
             profile.save()

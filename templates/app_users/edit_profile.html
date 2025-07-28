@@ -1,13 +1,72 @@
 {% extends 'index.html' %}
+{% load static %}
 
 {% block content %}
-<div class="container mt-4">
-    <h2>Edit Your Profile</h2>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Save Changes</button>
-        <a href="{% url 'profile-details' object.pk %}" class="btn btn-secondary">Cancel</a>
-    </form>
-</div>
+    <div class="content-edit">
+        <section class="info-section">
+            <div class="container">
+                <div class="img-container mt-5">
+                    {% if form.instance.profile_picture %}
+                        <img class="img-fluid rounded" style="height: 200px; width: auto"
+                             src="{{ form.instance.profile_picture.url }}" alt="user-profile-picture">
+                    {% else %}
+                        <img class="img-fluid rounded" style="height: 200px; width: auto"
+                             src="{% static 'images/default-user.jpg' %}" alt="default-user-picture">
+                    {% endif %}
+                </div>
+                <hr/>
+            </div>
+
+            <div class="container">
+                <h3>Edit Your Profile</h3>
+
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <section class="profile-info">
+                        <section class="all-fields">
+                            <div class="mb-3">
+                                <label for="{{ form.first_name.id_for_label }}" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="{{ form.first_name.id_for_label }}"
+                                {{ form.first_name }}
+                                {{ form.first_name.errors }}
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="{{ form.last_name.id_for_label }}" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="{{ form.last_name.id_for_label }}"
+                                {{ form.last_name }}
+                                {{ form.last_name.errors }}
+                            </div>
+
+                            <div class="field">
+                                <label for="{{ form.profile_picture.id_for_label }}">Profile Picture</label>
+                                {{ form.profile_picture }}
+                                {{ form.profile_picture.errors }}
+                            </div>
+                        </section>
+
+                        <div class="my-4">
+                            <button type="submit" class="btn btn-outline-primary me-2">Save Changes</button>
+                            <a href="{% url 'profile-details' user.pk %}" class="btn btn-outline-secondary">Cancel</a>
+                        </div>
+                    </section>
+                </form>
+            </div>
+        </section>
+    </div>
 {% endblock %}
+
+
+{#{% extends 'index.html' %}#}
+{##}
+{#{% block content %}#}
+{#<div class="container mt-4">#}
+{#    <h2>Edit Your Profile</h2>#}
+{#    <form method="post" enctype="multipart/form-data">#}
+{#        {% csrf_token %}#}
+{#        {{ form.as_p }}#}
+{#        <button type="submit" class="btn btn-primary">Save Changes</button>#}
+{#        <a href="{% url 'profile-details' object.pk %}" class="btn btn-secondary">Cancel</a>#}
+{#    </form>#}
+{#</div>#}
+{#{% endblock %}#}
