@@ -110,10 +110,7 @@ a:focus {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  background-image: url(../images/hero-bg.jpg);
-  background-size: cover;
-  background-position: top;
-  background-repeat: no-repeat;
+  background-color: #4653F9;
 }
 
 /*.sub_page .hero_area {*/

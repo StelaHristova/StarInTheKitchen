@@ -5,7 +5,14 @@
             <nav class="navbar navbar-expand-lg custom_nav-container">
                 <a class="navbar-brand" href="{% url 'home-page' %}">
             <span>
-              Star in the kitchen
+                <span style="color: #ffe537">
+                    {% if user.is_authenticated %}
+                        {{ user.profile.get_full_name }}
+                    {% else %}
+                        Star 
+                    {% endif %}
+                </span> 
+                in the kitchen
             </span>
                 </a>
                 <div class="" id="">
