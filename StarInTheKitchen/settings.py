@@ -165,4 +165,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'app_users.AppUser'
 LOGIN_URL = reverse_lazy('login-user')
 LOGIN_REDIRECT_URL = reverse_lazy('home-page')
-LOGOUT_REDIRECT_URL = reverse_lazy('login')
+# LOGOUT_REDIRECT_URL = reverse_lazy('login-user')
