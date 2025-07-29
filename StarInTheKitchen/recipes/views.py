@@ -2,7 +2,7 @@
 from django.forms import inlineformset_factory
 from django.db.models import Q
 from django.http import Http404, HttpResponseForbidden
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
@@ -14,6 +14,15 @@ from ..reviews.forms import ReviewForm
 from ..reviews.models import Review
 
 
+class MyRecipesView(LoginRequiredMixin, ListView):
+    model = Recipe
+    template_name = 'recipes/my_recipes.html'
+    context_object_name = 'recipes'
+
+    def get_queryset(self):
+        return Recipe.objects.filter(created_by=self.request.user)
+
+
 class RecipeListView(ListView):
     model = Recipe
     template_name = 'recipes/recipe_list.html'
@@ -21,14 +30,14 @@ class RecipeListView(ListView):
 
     def get_queryset(self):
         user = self.request.user
-        queryset = Recipe.objects.all()
+        # queryset = Recipe.objects.all()
 
         if user.is_authenticated:
             queryset = Recipe.objects.filter(
                 Q(is_approved=True) | Q(created_by=user)
             ).distinct()
         else:
-            queryset = queryset.filter(is_approved=True)
+            queryset = Recipe.objects.filter(is_approved=True)
 
         query = self.request.GET.get('q')
         if query:
@@ -44,15 +53,15 @@ class RecipeListView(ListView):
         if search_query:
             queryset = queryset.filter(title__icontains=search_query)
         if meal_type:
-            queryset = queryset.filter(meal_type_id=meal_type)
+            queryset = queryset.filter(meal_types__id=meal_type)
         if season:
-            queryset = queryset.filter(season_id=season)
+            queryset = queryset.filter(seasons__id=season)
         if diet:
-            queryset = queryset.filter(diet_id=diet)
+            queryset = queryset.filter(diets__id=diet)
         if method:
-            queryset = queryset.filter(method_id=method)
+            queryset = queryset.filter(methods__id=method)
         if occasion:
-            queryset = queryset.filter(occasion_id=occasion)
+            queryset = queryset.filter(occasions__id=occasion)
 
         return queryset
 
@@ -95,6 +104,29 @@ class RecipeDetailView(DetailView):
             context['can_review'] = False
 
         return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if not request.user.is_authenticated:
+            return redirect('login-page')
+
+        try:
+            review = Review.objects.get(user=request.user, recipe=self.object)
+            form = ReviewForm(request.POST, instance=review)
+        except Review.DoesNotExist:
+            form = ReviewForm(request.POST)
+
+        if form.is_valid():
+            new_review = form.save(commit=False)
+            new_review.user = request.user
+            new_review.recipe = self.object
+            new_review.save()
+            return redirect('recipe-detail', pk=self.object.pk)
+
+        # if invalid, re-render with the form and context
+        context = self.get_context_data()
+        context['review_form'] = form
+        return self.render_to_response(context)
     #     context = super().get_context_data(**kwargs)
     #     recipe = self.object
     #

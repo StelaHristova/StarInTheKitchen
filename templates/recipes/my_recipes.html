@@ -1,0 +1,26 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 href="{% url 'my-recipes' %}">My Recipes</h2>
+
+    <a href="{% url 'recipe-create' %}" class="btn btn-success mb-3">Create New Recipe</a>
+
+    {% if recipes %}
+        <ul class="list-group">
+            {% for recipe in recipes %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <a href="{% url 'recipe-detail' recipe.pk %}">{{ recipe.title }}</a>
+                    {% if not recipe.is_approved %}
+                        <span class="badge bg-warning text-dark">Pending</span>
+                    {% else %}
+                        <span class="badge bg-success">Approved</span>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="text-muted mt-3">You haven’t added any recipes yet. Click “Create New Recipe” to get started!</p>
+    {% endif %}
+</div>
+{% endblock %}
