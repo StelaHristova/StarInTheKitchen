@@ -47,21 +47,21 @@ class RecipeListView(ListView):
         meal_type = self.request.GET.get('meal_type')
         season = self.request.GET.get('season')
         diet = self.request.GET.get('diet')
-        method = self.request.GET.get('method')
+        cooking_method = self.request.GET.get('cooking_method')
         occasion = self.request.GET.get('occasion')
 
         if search_query:
             queryset = queryset.filter(title__icontains=search_query)
         if meal_type:
-            queryset = queryset.filter(meal_types__id=meal_type)
+            queryset = queryset.filter(meal_types__id__in=meal_type)
         if season:
-            queryset = queryset.filter(seasons__id=season)
+            queryset = queryset.filter(seasons__id__in=season)
         if diet:
-            queryset = queryset.filter(diets__id=diet)
-        if method:
-            queryset = queryset.filter(methods__id=method)
+            queryset = queryset.filter(diets__id__in=diet)
+        if cooking_method:
+            queryset = queryset.filter(cooking_methods__id__in=cooking_method)
         if occasion:
-            queryset = queryset.filter(occasions__id=occasion)
+            queryset = queryset.filter(occasions__id__in=occasion)
 
         return queryset
 

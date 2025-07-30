@@ -25,6 +25,11 @@ class RecipeForm(forms.ModelForm):
             'ingredients': Textarea(attrs={'rows': 4}),
             'description': Textarea(attrs={'rows': 3}),
             'instructions': Textarea(attrs={'rows': 6}),
+            'meal_types': forms.CheckboxSelectMultiple,
+            'seasons': forms.CheckboxSelectMultiple,
+            'diets': forms.CheckboxSelectMultiple,
+            'methods': forms.CheckboxSelectMultiple,
+            'occasions': forms.CheckboxSelectMultiple,
         }
 
     # def form_valid(self, form):

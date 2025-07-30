@@ -1,9 +1,10 @@
 from cloudinary import CloudinaryResource
 from django import forms
-from django.contrib.auth import forms as auth_forms, get_user_model
+from django.contrib.auth import forms as auth_forms, get_user_model, login
 from django.core.exceptions import ValidationError
 from PIL import Image
 from django.forms import ClearableFileInput
+from django.shortcuts import redirect
 from django.utils.translation import gettext_lazy as _
 from StarInTheKitchen.app_users.widgets import CustomClearableFileInput
 from StarInTheKitchen.app_users.models import Profile
@@ -42,6 +43,11 @@ class AppUserForm(auth_forms.UserCreationForm):
         profile.save()
 
         return user
+
+    # def form_valid(self, form):
+    #     user = form.save()
+    #     login(self.request, user)
+    #     return redirect('home-page')
 
 
 class EditAppUserForm(forms.ModelForm):
