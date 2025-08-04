@@ -11,7 +11,7 @@ def send_email_to_new_registered_user(email, full_name):
         'full_name': full_name,
     }
 
-    subject = '👋 Welcome to Star in the Kitchen!'
+    subject = '⭐ Welcome to Star in the Kitchen!'
     to_email = email
     recipient_list = [to_email]
     template_name = 'emails/welcome_to_star_in_the_kitchen.html'

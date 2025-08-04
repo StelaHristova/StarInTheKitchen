@@ -94,11 +94,15 @@ class RecipeDetailView(DetailView):
             context['is_favourited'] = recipe.favourited_by.filter(user=self.request.user).exists()
             context['can_review'] = recipe.created_by != self.request.user
 
-            try:
-                review = Review.objects.get(user=self.request.user, recipe=recipe)
-                context['review_form'] = ReviewForm(instance=review)
-            except Review.DoesNotExist:
+            if Review.objects.filter(user=self.request.user, recipe=recipe).exists():
+                context['review_form'] = None
+            else:
                 context['review_form'] = ReviewForm()
+            # try:
+            #     review = Review.objects.get(user=self.request.user, recipe=recipe)
+            #     context['review_form'] = ReviewForm(instance=review)
+            # except Review.DoesNotExist:
+            #     context['review_form'] = ReviewForm()
         else:
             context['is_favourited'] = False
             context['can_review'] = False
@@ -148,7 +152,10 @@ class RecipeCreateView(LoginRequiredMixin, CreateView):
         return reverse_lazy('recipe-detail', kwargs={'pk': self.object.pk})
 
     def form_valid(self, form):
+        self.object = form.save(commit=False)
         form.instance.created_by = self.request.user
+        self.object.save()
+        form.save_m2m()
         return super().form_valid(form)
 
 
@@ -156,6 +163,12 @@ class RecipeUpdateView(LoginRequiredMixin, UpdateView):
     model = Recipe
     form_class = RecipeForm
     template_name = 'recipes/recipe_form.html'
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.save()
+        form.save_m2m()
+        return super().form_valid(form)
 
     def dispatch(self, request, *args, **kwargs):
         recipe = self.get_object()

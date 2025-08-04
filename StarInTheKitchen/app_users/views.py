@@ -84,7 +84,8 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
         context['default_profile_image_id'] = settings.DEFAULT_PROFILE_IMAGE
         return context
 
-class ProfileDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+
+class ProfileDeleteView(LoginRequiredMixin, DeleteView):
     model = Profile
     template_name = 'app_users/delete_profile.html'
     success_url = reverse_lazy('home-page')

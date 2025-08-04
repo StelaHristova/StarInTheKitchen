@@ -28,7 +28,7 @@ class RecipeForm(forms.ModelForm):
             'meal_types': forms.CheckboxSelectMultiple,
             'seasons': forms.CheckboxSelectMultiple,
             'diets': forms.CheckboxSelectMultiple,
-            'methods': forms.CheckboxSelectMultiple,
+            'cooking_methods': forms.CheckboxSelectMultiple,
             'occasions': forms.CheckboxSelectMultiple,
         }
 
