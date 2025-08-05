@@ -8,7 +8,7 @@ from django.views.generic import CreateView, UpdateView, DetailView, DeleteView
 
 from StarInTheKitchen.app_users.forms import AppUserForm, EditAppUserForm
 from StarInTheKitchen.app_users.models import Profile
-
+from django.contrib import messages
 AppUserModel = get_user_model()
 
 
@@ -31,8 +31,12 @@ class RegisterUserView(UserPassesTestMixin, CreateView):
         response = super().form_valid(form)
 
         login(self.request, self.object)
-
+        messages.success(self.request, "Registration successful!")
         return response
+
+    def form_invalid(self, form):
+        messages.error(self.request, "There was an error. Please check the form.")
+        return super().form_invalid(form)
 
 
 class LoginUserView(UserPassesTestMixin, LoginView):
@@ -85,7 +89,7 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
         return context
 
 
-class ProfileDeleteView(LoginRequiredMixin, DeleteView):
+class ProfileDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Profile
     template_name = 'app_users/delete_profile.html'
     success_url = reverse_lazy('home-page')
@@ -97,6 +101,10 @@ class ProfileDeleteView(LoginRequiredMixin, DeleteView):
         profile = get_object_or_404(Profile, pk=pk)
         return self.request.user == profile.user
 
+
+class StaffOnlyView(UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.groups.filter(name='staff_admins').exists()
 #
 #     def get_success_url(self):
 #         return reverse_lazy('profile-details-update', kwargs={

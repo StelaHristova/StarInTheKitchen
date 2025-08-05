@@ -3,8 +3,8 @@ from django.forms import inlineformset_factory
 from django.db.models import Q
 from django.http import Http404, HttpResponseForbidden
 from django.shortcuts import render, redirect
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 
 
@@ -183,3 +183,13 @@ class RecipeUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('recipe-detail', kwargs={'pk': self.object.pk})
+
+
+class RecipeDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Recipe
+    template_name = 'recipes/recipe_confirm_delete.html'
+    success_url = reverse_lazy('my-recipes')
+
+    def test_func(self):
+        recipe = self.get_object()
+        return self.request.user == recipe.created_by

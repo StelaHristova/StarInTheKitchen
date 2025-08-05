@@ -1,13 +1,20 @@
+from django.http import JsonResponse
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import get_user_model
 from django.db.models import Avg
 from django.shortcuts import render
 from django.views.generic import TemplateView
+from asgiref.sync import sync_to_async
 
 from StarInTheKitchen.recipes.models import Recipe
+from StarInTheKitchen.reviews.models import Review
 from StarInTheKitchen.categories.models import MealType, Season, Diet, CookingMethod, Occasion
+from django.utils.timezone import now
+
+User = get_user_model()
 
 
-# Create your views here.
-class HomePageView(TemplateView):
+class HomePageView(TemplateView, LoginRequiredMixin):
     template_name = 'home/home-page.html'
 
     def get_top_recipe_image_for_category(self, category_qs, field_name):
@@ -26,11 +33,6 @@ class HomePageView(TemplateView):
 
         return data
 
-    # def get_template_names(self):
-    #     if not self.request.user.is_authenticated:
-    #         return ['index.html']
-    #     return [self.template_name]
-    #
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['featured_recipes'] = Recipe.objects.filter(
@@ -53,6 +55,35 @@ class HomePageView(TemplateView):
 
         return context
 
+
+async def site_statistics_view(request):
+    recipe_count = await Recipe.objects.acount()
+    user_count = await User.objects.acount()
+    review_count = await Review.objects.acount()
+
+    return JsonResponse({
+        'recipes': recipe_count,
+        'users': user_count,
+        'reviews': review_count,
+    })
+
+
+@sync_to_async
+def get_latest_recipes():
+    return list(
+        Recipe.objects.filter(is_approved=True)
+        .order_by('-created_at')[:5]
+        .values('title', 'created_by__email', 'created_at')
+    )
+
+async def latest_recipes_view(request):
+    recipes = await get_latest_recipes()
+
+    # Преобразуваме датите в четим формат
+    for r in recipes:
+        r['created_at'] = r['created_at'].strftime("%Y-%m-%d %H:%M")
+
+    return JsonResponse({"latest_recipes": recipes})
 
 
 

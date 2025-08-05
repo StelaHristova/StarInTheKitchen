@@ -13,6 +13,7 @@
                     <a href="{% url 'recipe-detail' recipe.pk %}">{{ recipe.title }}</a>
                     {% if not recipe.is_approved %}
                         <span class="badge bg-warning text-dark">Pending</span>
+                        <a href="{% url 'recipe-delete' recipe.pk %}" class="btn btn-danger">Delete</a>
                     {% else %}
                         <span class="badge bg-success">Approved</span>
                     {% endif %}

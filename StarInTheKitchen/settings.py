@@ -47,6 +47,7 @@ PROJECT_MADE_APPS = [
 
     'cloudinary',
     'cloudinary_storage',
+    'rest_framework',
 ]
 
 INSTALLED_APPS = [

@@ -17,7 +17,7 @@ def create_profile(sender, instance, created, **kwargs):
 
         group = Group.objects.filter(name='regular_users').first()
         if group:
-            instance.group.add(group)
+            instance.groups.add(group)
 
         try:
             send_email_to_new_registered_user.delay(instance.email, instance.get_full_name())
