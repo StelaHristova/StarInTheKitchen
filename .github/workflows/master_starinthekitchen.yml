@@ -21,6 +21,18 @@ jobs:
       DB_PASS: ${{ secrets.DB_PASS }}
       DB_HOST: ${{ secrets.DB_HOST }}
       DB_PORT: ${{ secrets.DB_PORT }}
+      CSRF_TRUSTED_ORIGINS: ${{ secrets.CSRF_TRUSTED_ORIGINS }}
+      EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
+      EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
+      EMAIL_HOST_USER: ${{ secrets.EMAIL_HOST_USER }}
+      EMAIL_HOST_PASSWORD: ${{ secrets.EMAIL_HOST_PASSWORD }}
+      EMAIL_USE_TLS: ${{ secrets.EMAIL_USE_TLS }}
+      CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+      CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+      CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
+      DEFAULT_PROFILE_IMAGE: ${{ secrets.CLOUDINARY_DEFAULT_PROFILE_IMAGE }}
+      CELERY_BROKER_URL: ${{ secrets.CELERY_BROKER_URL }}
+      CELERY_RESULT_BACKEND: ${{ secrets.CELERY_RESULT_BACKEND }}
        
       
 
@@ -90,7 +102,11 @@ jobs:
         with:
           app-name: 'starinthekitchen'
           slot-name: 'Production'
-          package: StarInTheKitchen
+          package: ./
+
+
+
+
 
 
 
