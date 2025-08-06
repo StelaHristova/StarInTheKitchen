@@ -27,8 +27,7 @@ jobs:
           source venv/bin/activate
 
       - name: Install dependencies
-        run: |
-          cd StarInTheKitchen
+        run: 
           pip install -r requirements.txt
 
       - name: Upload artifact for deployment jobs
@@ -65,3 +64,4 @@ jobs:
           app-name: 'starinthekitchen'
           slot-name: 'Production'
           package: StarInTheKitchen
+
