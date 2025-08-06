@@ -1,1 +1,1 @@
-gunicorn StarInTheKitchen.wsgi:application
+gunicorn StarInTheKitchen.wsgi:application --bind=0.0.0.0
