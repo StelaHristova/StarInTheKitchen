@@ -21,13 +21,15 @@ jobs:
           python-version: '3.11'
 
       - name: Create and start virtual environment
+        env: 
+          DEBUG: ${{ secrets.DEBUG }}
+          ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
         run: |
           cd StarInTheKitchen
           python -m venv venv
           source venv/bin/activate
           
-          env: DEBUG: ${{ secrets.DEBUG }}
-          ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
+          
       
 
       - name: Install dependencies
@@ -77,6 +79,7 @@ jobs:
           app-name: 'starinthekitchen'
           slot-name: 'Production'
           package: StarInTheKitchen
+
 
 
 
