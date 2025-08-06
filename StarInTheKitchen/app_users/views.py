@@ -53,17 +53,15 @@ class LoginUserView(UserPassesTestMixin, LoginView):
         return redirect('home-page')
 
 
-class ProfileView(LoginRequiredMixin, UpdateView, DetailView):
+class ProfileView(LoginRequiredMixin, DetailView):
     model = Profile
-    form_class = EditAppUserForm
+    # form_class = EditAppUserForm
     template_name = 'app_users/profile_page.html'
 
     def get_template_names(self):
         user = self.request.user
 
         if self.request.user.pk == self.kwargs['pk']:
-            # return ['app_users/edit_profile.html']
-
             return ['app_users/profile_page.html']
 
     def get_success_url(self):

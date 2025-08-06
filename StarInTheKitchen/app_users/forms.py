@@ -99,8 +99,8 @@ class EditAppUserForm(forms.ModelForm):
 
     def save(self, commit=True):
         profile = super().save(commit=False)
-
         user = profile.user
+
         email = self.cleaned_data.get('email')
 
         if email:
@@ -120,9 +120,6 @@ class EditAppUserForm(forms.ModelForm):
             if old_picture and hasattr(old_picture,
                                        'public_id') and 'default_profile_picture' not in old_picture.public_id:
                 cloudinary.uploader.destroy(old_picture.public_id)
-
-        # if self.cleaned_data.get('profile_picture') is False:
-        #     profile.profile_picture = None
 
         if commit:
             profile.save()
