@@ -25,6 +25,10 @@ jobs:
           cd StarInTheKitchen
           python -m venv venv
           source venv/bin/activate
+          
+          env: DEBUG: ${{ secrets.DEBUG }}
+          ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
+      
 
       - name: Install dependencies
         run: 
@@ -32,6 +36,7 @@ jobs:
 
       - name: Set environment variables
         run: echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
+
 
       - name: Collect Static Files
         run: 
@@ -72,6 +77,7 @@ jobs:
           app-name: 'starinthekitchen'
           slot-name: 'Production'
           package: StarInTheKitchen
+
 
 
 
