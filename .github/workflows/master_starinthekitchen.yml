@@ -30,15 +30,14 @@ jobs:
         run: 
           pip install -r requirements.txt
 
+      - name: Set environment variables
+        run: echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
+
       - name: Collect Static Files
         run: 
           python manage.py collectstatic --noinput
 
-      - name: Set environment variables
-        run: echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
-
-
-
+     
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
         with:
@@ -73,6 +72,7 @@ jobs:
           app-name: 'starinthekitchen'
           slot-name: 'Production'
           package: StarInTheKitchen
+
 
 
 
