@@ -12,6 +12,18 @@ jobs:
     permissions:
       contents: read
 
+    env: 
+      DEBUG: ${{ secrets.DEBUG }}
+      ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      DB_NAME: ${{ secrets.DB_NAME }}
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASS: ${{ secrets.DB_PASS }}
+      DB_HOST: ${{ secrets.DB_HOST }}
+      DB_PORT: ${{ secrets.DB_PORT }}
+       
+      
+
     steps:
       - uses: actions/checkout@v4
 
@@ -20,11 +32,17 @@ jobs:
         with:
           python-version: '3.11'
 
+     
+
+        
       - name: Create and start virtual environment
         run: |
           cd StarInTheKitchen
           python -m venv venv
           source venv/bin/activate
+          
+          
+      
 
       - name: Install dependencies
         run: 
@@ -32,6 +50,7 @@ jobs:
 
       - name: Set environment variables
         run: echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
+
 
       - name: Collect Static Files
         run: 
@@ -72,6 +91,9 @@ jobs:
           app-name: 'starinthekitchen'
           slot-name: 'Production'
           package: StarInTheKitchen
+
+
+
 
 
 
