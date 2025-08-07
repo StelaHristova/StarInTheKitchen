@@ -1,6 +1,10 @@
 cd /home/site/wwwroot
 
-celery -A StarInTheKitchen worker --loglevel=info &
+if [ -d .venv ]; then
+  source .venv/bin/activate
+fi
+
+celery -A StarInTheKitchen worker --loglevel=info --detach
 
 python manage.py collectstatic --noinput
 
