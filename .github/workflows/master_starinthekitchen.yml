@@ -50,6 +50,9 @@ jobs:
 
           pip install -r requirements.txt
 
+      - name: Make startup.sh executable
+        run: chmod +x startup.sh
+
       - name: Collect static files
         run: |
           source .venv/bin/activate
@@ -91,6 +94,7 @@ jobs:
           app-name: 'starinthekitchen'
           slot-name: 'Production'
           package: ./
+
 
 
 
