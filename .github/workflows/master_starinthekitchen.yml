@@ -45,10 +45,11 @@ jobs:
 
       - name: Set up and install dependencies
         run: |
+          pip install -r requirements.txt
+          
           cd StarInTheKitchen
           python -m venv antenv
           source antenv/bin/activate
-          pip install -r requirements.txt
           python manage.py collectstatic --noinput
 
       - name: Upload artifact for deployment
@@ -85,3 +86,4 @@ jobs:
           app-name: 'starinthekitchen'
           slot-name: 'Production'
           package: StarInTheKitchen
+
