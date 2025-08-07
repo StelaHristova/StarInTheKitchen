@@ -50,6 +50,9 @@ jobs:
 
           pip install -r requirements.txt
 
+      - name: Make startup.sh executable
+        run: chmod +x startup.sh
+
       - name: Collect static files
         run: |
           source .venv/bin/activate
@@ -81,9 +84,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_8FB54599CF6A44F1B7C601828DE8A2C6 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_1D8CBA2281324ECBAD9ED262CBBEF328 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_31050E4C3AEF4D928E83F0E5829B9F71 }}
+           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_F10AB3971B1B40A4912B86916C4C67FD }}
+           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_078DD03958A64488BF07869BA7AA3FAA }}
+           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_E14F1449BE71404DB9F66F2902E6ED67 }}
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
@@ -91,6 +94,7 @@ jobs:
           app-name: 'starinthekitchen'
           slot-name: 'Production'
           package: ./
+
 
 
 
