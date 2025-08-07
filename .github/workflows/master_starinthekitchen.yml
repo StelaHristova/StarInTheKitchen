@@ -89,6 +89,7 @@ jobs:
         with:
           app-name: 'starinthekitchen'
           slot-name: 'Production'
-          package: StarInTheKitchen
+          package: ./
+
 
 
