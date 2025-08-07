@@ -45,6 +45,7 @@ CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS').split(',')
 # Application definition
 
 PROJECT_MADE_APPS = [
+    'StarInTheKitchen.api',
     'StarInTheKitchen.app_users',
     'StarInTheKitchen.categories',
     'StarInTheKitchen.favourites',
