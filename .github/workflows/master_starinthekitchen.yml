@@ -50,8 +50,8 @@ jobs:
       - name: Create and start virtual environment
         run: |
           cd StarInTheKitchen
-          python -m venv venv
-          source venv/bin/activate
+          python -m venv antenv
+          source antenv/bin/activate
           
           
       
@@ -65,7 +65,8 @@ jobs:
 
 
       - name: Collect Static Files
-        run: 
+        run:  |
+          source antenv/bin/activate
           python manage.py collectstatic --noinput
 
      
@@ -74,8 +75,8 @@ jobs:
         with:
           name: python-app
           path: |
-            StarInTheKitchen
-            !StarInTheKitchen/venv/
+            .
+            !antenv/
 
   deploy:
     runs-on: ubuntu-latest
@@ -103,6 +104,7 @@ jobs:
           app-name: 'starinthekitchen'
           slot-name: 'Production'
           package: ./
+
 
 
 
