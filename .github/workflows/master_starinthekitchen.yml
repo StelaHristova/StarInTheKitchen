@@ -12,7 +12,7 @@ jobs:
     permissions:
       contents: read
 
-    env: 
+    env:
       DEBUG: ${{ secrets.DEBUG }}
       ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
       SECRET_KEY: ${{ secrets.SECRET_KEY }}
@@ -33,44 +33,25 @@ jobs:
       DEFAULT_PROFILE_IMAGE: ${{ secrets.CLOUDINARY_DEFAULT_PROFILE_IMAGE }}
       CELERY_BROKER_URL: ${{ secrets.CELERY_BROKER_URL }}
       CELERY_RESULT_BACKEND: ${{ secrets.CELERY_RESULT_BACKEND }}
-       
-      
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Set up Python version
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-     
-
-        
-      - name: Create and start virtual environment
+      - name: Set up and install dependencies
         run: |
           cd StarInTheKitchen
           python -m venv antenv
           source antenv/bin/activate
-          
-          
-      
-
-      - name: Install dependencies
-        run: 
           pip install -r requirements.txt
-
-      - name: Set environment variables
-        run: echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
-
-
-      - name: Collect Static Files
-        run:  |
-          source antenv/bin/activate
           python manage.py collectstatic --noinput
 
-     
-      - name: Upload artifact for deployment jobs
+      - name: Upload artifact for deployment
         uses: actions/upload-artifact@v4
         with:
           name: python-app
@@ -86,7 +67,7 @@ jobs:
       contents: read
 
     steps:
-      - name: Download artifact from build job
+      - name: Download artifact
         uses: actions/download-artifact@v4
         with:
           name: python-app
@@ -103,19 +84,4 @@ jobs:
         with:
           app-name: 'starinthekitchen'
           slot-name: 'Production'
-          package: ./
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+          package: StarInTheKitchen
