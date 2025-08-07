@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import RecipeListAPI, RecipeDetailAPI, ReviewListAPI
+from StarInTheKitchen.api.views import RecipeListAPI, RecipeDetailAPI, ReviewListAPI
 
 urlpatterns = [
     path('recipes/', RecipeListAPI.as_view(), name='api-recipes'),
