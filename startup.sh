@@ -4,7 +4,11 @@ if [ -d .venv ]; then
   source .venv/bin/activate
 fi
 
-celery -A StarInTheKitchen worker --loglevel=info --detach
+if [ -f .env ]; then
+  export $(cat .env | xargs)
+fi
+
+#celery -A StarInTheKitchen worker --loglevel=info --detach
 
 python manage.py collectstatic --noinput
 
