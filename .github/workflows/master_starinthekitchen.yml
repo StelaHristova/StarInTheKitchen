@@ -75,8 +75,8 @@ jobs:
         with:
           name: python-app
           path: |
-            .
-            !antenv/
+            StarInTheKitchen
+            !StarInTheKitchen/antenv/
 
   deploy:
     runs-on: ubuntu-latest
@@ -104,6 +104,7 @@ jobs:
           app-name: 'starinthekitchen'
           slot-name: 'Production'
           package: ./
+
 
 
 
