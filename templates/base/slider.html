@@ -1,0 +1,147 @@
+{% load static %}
+
+<section class="slider_section">
+    <div class="container ">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <div class="detail-box">
+                    <h1>
+                        Discover Amazing Recipes
+                    </h1>
+                    <p>
+                        Explore meals by season, diet, method and more - all shared by home chefs like you
+                    </p>
+                </div>
+                <div class="find_container ">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <form method="get" action="{% url 'recipe-list' %}">
+                                    <div class="form-row">
+                                        <div class="form-group col-lg-4">
+                                            <input type="text" class="form-control" name="search"
+                                                   placeholder="Search by recipe name" value="{{ request.GET.search }}">
+                                        </div>
+
+                                        <div class="form-group col-lg-2">
+                                            <select class="form-control" name="meal_type" multiple>
+                                                <option disabled selected hidden>Meal Type</option>
+                                                {% for mt in meal_types %}
+                                                    <option value="{{ mt.id }}">{{ mt.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group col-lg-2">
+                                            <select class="form-control" name="season" multiple>
+                                                <option disabled selected hidden
+                                                ">Season</option>
+                                                {% for s in seasons %}
+                                                    <option value="{{ s.id }}">{{ s.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group col-lg-2">
+                                            <select class="form-control" name="diet" multiple>
+                                                <option disabled selected hidden
+                                                ">Diet</option>
+                                                {% for d in diets %}
+                                                    <option value="{{ d.id }}">{{ d.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group col-lg-2">
+                                            <select class="form-control" name="cooking_method" multiple>
+                                                <option disabled selected hidden>Method</option>
+                                                {% for m in methods %}
+                                                    <option value="{{ m.id }}">{{ m.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group col-lg-2 mt-2">
+                                            <button type="submit" class="btn btn-warning w-100">Find Recipes</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+
+                                {#                                <form>#}
+                                {#                                    <div class="form-row ">#}
+                                {#                                        <div class="form-group col-lg-5">#}
+                                {#                                            <input type="text" class="form-control" id="inputHotel"#}
+                                {#                                                   placeholder="Search by recipe name">#}
+                                {#                                        </div>#}
+                                {#                                        <div class="form-group col-lg-3">#}
+                                {#                                            <input type="text" class="form-control" id="inputLocation"#}
+                                {#                                                   placeholder="Select category">#}
+                                {#                                            <span class="location_icon">#}
+                                {#                            <i class="fa fa-map-marker" aria-hidden="true"></i>#}
+                                {#                          </span>#}
+                                {#                                        </div>#}
+                                {#                                        <div class="form-group col-lg-3">#}
+                                {#                                            <div class="btn-box">#}
+                                {#                                                <button type="submit" class="btn btn-warning">Find Recipes</button>#}
+                                {#                                            </div>#}
+                                {#                                        </div>#}
+                                {#                                    </div>#}
+                                {#                                </form>#}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slider_container d-flex justify-content-center flex-wrap">
+        {% for item in category_images %}
+            <div class="text-center">
+                <img src="{{ item.image_url }}" alt="{{ item.category }}"
+                     class="rounded-circle img-fluid category-circle"/>
+                <p>{{ item.category }}</p>
+            </div>
+        {% endfor %}
+        {#        <div class="item">#}
+        {#            <div class="img-box">#}
+        {#                <img src="{% static 'images/slider-img1.png' %}" alt=""/>#}
+        {#            </div>#}
+        {#        </div>#}
+        {#        <div class="item">#}
+        {#            <div class="img-box">#}
+        {#                <img src="{% static 'images/slider-img2.png' %}" alt=""/>#}
+        {#            </div>#}
+        {#        </div>#}
+        {#        <div class="item">#}
+        {#            <div class="img-box">#}
+        {#                <img src="{% static 'images/slider-img3.png' %}" alt=""/>#}
+        {#            </div>#}
+        {#        </div>#}
+        {#        <div class="item">#}
+        {#            <div class="img-box">#}
+        {#                <img src="{% static 'images/slider-img4.png' %}" alt=""/>#}
+        {#            </div>#}
+        {#        </div>#}
+        {#        <div class="item">#}
+        {#            <div class="img-box">#}
+        {#                <img src="{% static 'images/slider-img1.png' %}" alt=""/>#}
+        {#            </div>#}
+        {#        </div>#}
+        {#        <div class="item">#}
+        {#            <div class="img-box">#}
+        {#                <img src="{% static 'images/slider-img2.png' %}" alt=""/>#}
+        {#            </div>#}
+        {#        </div>#}
+        {#        <div class="item">#}
+        {#            <div class="img-box">#}
+        {#                <img src="{% static 'images/slider-img3.png' %}" alt=""/>#}
+        {#            </div>#}
+        {#        </div>#}
+        {#        <div class="item">#}
+        {#            <div class="img-box">#}
+        {#                <img src="{% static 'images/slider-img4.png' %}" alt=""/>#}
+        {#            </div>#}
+        {#        </div>#}
+    </div>
+</section>
