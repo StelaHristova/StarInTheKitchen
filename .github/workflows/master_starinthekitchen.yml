@@ -45,8 +45,8 @@ jobs:
 
       - name: Set up and install dependencies
         run: |
-          python -m venv antenv
-          source antenv/bin/activate
+          python -m venv .venv
+          source venv/bin/activate
 
           pip install -r requirements.txt
 
@@ -62,7 +62,7 @@ jobs:
           name: python-app
           path: |
             ./
-            !antenv/
+            .venv/
            
 
   deploy:
@@ -91,6 +91,7 @@ jobs:
           app-name: 'starinthekitchen'
           slot-name: 'Production'
           package: ./
+
 
 
 
