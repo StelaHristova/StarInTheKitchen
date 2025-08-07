@@ -1,12 +1,16 @@
-name: Deploy Django App to Azure
+name: Build and deploy Python app to Azure Web App - starinthekitchen
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
+  workflow_dispatch:
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     env:
       DEBUG: ${{ secrets.DEBUG }}
@@ -39,16 +43,56 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install dependencies
+      - name: Set up and install dependencies
         run: |
-          python -m venv venv
-          source venv/bin/activate
+          python -m venv .venv
+          source .venv/bin/activate
+
           pip install -r requirements.txt
+
+      - name: Collect static files
+        run: |
+          source .venv/bin/activate
           python manage.py collectstatic --noinput
+
+
+      - name: Upload artifact for deployment
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-app
+          path: |
+            ./
+            !.venv/
+           
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: python-app
+
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_8FB54599CF6A44F1B7C601828DE8A2C6 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_1D8CBA2281324ECBAD9ED262CBBEF328 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_31050E4C3AEF4D928E83F0E5829B9F71 }}
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'starinthekitchen'
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          slot-name: 'Production'
           package: ./
+
+
+
+
+
