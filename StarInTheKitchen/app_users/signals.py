@@ -9,7 +9,6 @@ from StarInTheKitchen.app_users.tasks import send_email_to_new_registered_user
 @receiver(post_save, sender=AppUser)
 def create_profile(sender, instance, created, **kwargs):
     if created:
-        print("Signal triggered for:", instance.email)
 
         profile = Profile(
             user=instance
