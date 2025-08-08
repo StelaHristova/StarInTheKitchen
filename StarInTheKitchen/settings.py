@@ -45,6 +45,11 @@ CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS').split(',')
 # Application definition
 
 PROJECT_MADE_APPS = [
+    'cloudinary',
+    'cloudinary_storage',
+    'rest_framework',
+    'drf_yasg',
+
     'StarInTheKitchen.api',
     'StarInTheKitchen.app_users.apps.AppUsersConfig',
     'StarInTheKitchen.categories',
@@ -52,10 +57,6 @@ PROJECT_MADE_APPS = [
     'StarInTheKitchen.home',
     'StarInTheKitchen.recipes',
     'StarInTheKitchen.reviews',
-
-    'cloudinary',
-    'cloudinary_storage',
-    'rest_framework',
 ]
 
 INSTALLED_APPS = [

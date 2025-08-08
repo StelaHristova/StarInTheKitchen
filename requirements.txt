@@ -15,8 +15,10 @@ Django==5.2.4
 django-cloudinary-storage==0.3.0
 django-crispy-forms==2.4
 djangorestframework==3.16.0
+drf-yasg==1.21.10
 gunicorn==23.0.0
 idna==3.10
+inflection==0.5.1
 kombu==5.5.4
 Markdown==3.8.2
 packaging==25.0
@@ -25,11 +27,14 @@ prompt_toolkit==3.0.51
 psycopg2-binary==2.9.10
 python-dateutil==2.9.0.post0
 python-decouple==3.8
+pytz==2025.2
+PyYAML==6.0.2
 recipes==0.1
 requests==2.32.4
 six==1.17.0
 sqlparse==0.5.3
 tzdata==2025.2
+uritemplate==4.2.0
 urllib3==2.5.0
 vine==5.1.0
 wcwidth==0.2.13
