@@ -1,4 +1,4 @@
-cd /home/site/wwwroot
+cd /home/site/wwwroot/python-app/StarInTheKitchen
 
 if [ -d "../.venv" ]; then
   source ../.venv/bin/activate
