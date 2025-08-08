@@ -36,11 +36,7 @@ class AppUserForm(auth_forms.UserCreationForm):
         first_name = self.cleaned_data['first_name']
         last_name = self.cleaned_data['last_name']
 
-        profile = user.profile
-        profile.first_name = first_name
-        profile.last_name = last_name
-
-        profile.save()
+        Profile.objects.create(user=user, first_name=first_name, last_name=last_name)
 
         return user
 
