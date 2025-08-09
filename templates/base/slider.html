@@ -98,7 +98,7 @@
     <div class="slider_container d-flex justify-content-center flex-wrap">
         {% for item in category_images %}
             <div class="d-flex flex-column justify-content-center">
-                <a class="mx-auto text-primary" href="{% url "schema-swagger-ui" %}" target="_blank">
+                <a class="mx-auto text-primary" href="{% url "recipe-detail" item.recipe.pk %}" target="_blank">
                     <img src="{{ item.image_url }}" alt="{{ item.category }}"
                          class="mx-auto rounded-circle img-fluid category-circle"
                     />
