@@ -1,34 +1,47 @@
-{% extends  'index.html' %}
+{% extends 'index.html' %}
 {% load static %}
 
 {% block content %}
+    <div class="content-edit">
+        <section class="info-section">
+            <div class="container mt-5">
 
- <div class="main-content">
-        <div class="login-box">
-            <form method="POST" action="{% url 'register-user' %}">
-                <h1>Sign Up</h1>
+                <h3>Sign Up</h3>
+                <hr/>
 
-                {% csrf_token %}
+                <form method="POST" action="{% url 'register-user' %}">
+                    {% csrf_token %}
+                    <section class="all-fields">
+                        {% for field in form %}
+                            <div class="mb-3">
+                                <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                                {{ field }}
+                                {% if field.errors %}
+                                    <div class="text-danger small">
+                                        {{ field.errors|striptags }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
 
-                {% for field in form %}
-                    <p>
-                        {{ field.label }}
-                        {{ field }}
+                        {% if form.non_field_errors %}
+                            <div class="text-danger mb-3">
+                                {{ form.non_field_errors }}
+                            </div>
+                        {% endif %}
+                    </section>
 
-                        {{ field.errors }}
-                    </p>
-                {% endfor %}
+                    <div class="d-flex align-items-center gap-2 my-2">
+                        <p class="mb-0 text-muted">Already have an account?</p>
+                        <a href="{% url 'login-user' %}" class="link-primary">Log In</a>
+                    </div>
 
-                <div class="login-container">
-                    <p class="log-in-p">Already have an account?</p>
-                    <a href="{% url "login-user" %}">Log In</a>
-                </div>
+                    <div class="my-3">
+                        <button type="submit" class="btn btn-outline-primary me-2">Sign Up</button>
+                    </div>
+                </form>
 
-                <div class="sign-in-buttons-cont">
-                    <button type="submit">Sign Up</button>
-                </div>
-            </form>
-        </div>
+            </div>
+        </section>
     </div>
-
 {% endblock %}
