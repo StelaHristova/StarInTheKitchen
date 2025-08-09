@@ -20,15 +20,9 @@
                 <h3>{{ object.get_full_name }}'s Account</h3>
 
                 <section class="profile-info">
-                    {% if user.is_authenticated and user.pk == object.pk %}
-                        <div class="my-4">
-                            <a href="{% url 'edit-profile' %}" class="btn btn-outline-primary me-2">Edit Profile</a>
-                            <a href="{% url 'delete-profile' object.pk %}" class="btn btn-outline-danger">Delete
-                                Profile</a>
-                        </div>
-                    {% endif %}
+                 
                     <fieldset disabled>
-                        <section class="all-fields">
+                        <section class="all-fields" style="max-width: 400px;">
                             <div class="mb-3">
                                 <label for="disabledTextInput" class="form-label">First Name</label>
                                 <input type="text" id="disabledTextInput" class="form-control"
@@ -56,6 +50,14 @@
                             </div>
                         </section>
                     </fieldset>
+                
+                   {% if user.is_authenticated and user.pk == object.pk %}
+                        <div class="my-4 mb-5">
+                            <a href="{% url 'edit-profile' %}" class="btn btn-primary me-2">Edit Profile</a>
+                            <a href="{% url 'delete-profile' object.pk %}" class="btn btn-danger">Delete
+                                Profile</a>
+                        </div>
+                    {% endif %}
                 </section>
 
             </div>
