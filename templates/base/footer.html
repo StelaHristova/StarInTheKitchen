@@ -2,10 +2,26 @@
 
 <div class="footer_container">
     <footer class="footer_section">
-        <div class="container">
+        <div class="container d-flex justify-content-between">
             <p>
                 &copy; <span id="displayYear"></span> Star in the Kitchen. All rights reserved
             </p>
+            <section class="d-flex text-white">
+                <p class="mr-2">
+                    API Docs:
+                </p>
+               
+                <div class="d-flex">
+                    <a class="text-primary" href="{% url "schema-swagger-ui" %}" target="_blank">
+                       Swagger
+                    </a>
+                    <span class="mx-2">|</span>
+                     <a class="text-primary" href="{% url "schema-redoc" %}" target="_blank">
+                       Redoc
+                    </a>
+                </div>
+            </section>
+                
         </div>
     </footer>
 </div>
