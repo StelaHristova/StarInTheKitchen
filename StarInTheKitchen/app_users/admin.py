@@ -13,4 +13,8 @@ class AppUserAdmin(admin.ModelAdmin):
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('user', 'first_name', 'last_name', 'date_of_register')
+    search_fields = ('user__email', 'first_name', 'last_name')
+    list_filter = ('date_of_register',)
+    ordering = ('-date_of_register',)
+    date_hierarchy = 'date_of_register'
