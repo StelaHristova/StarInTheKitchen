@@ -97,10 +97,13 @@
     </div>
     <div class="slider_container d-flex justify-content-center flex-wrap">
         {% for item in category_images %}
-            <div class="text-center">
-                <img src="{{ item.image_url }}" alt="{{ item.category }}"
-                     class="rounded-circle img-fluid category-circle"/>
-                <p>{{ item.category }}</p>
+            <div class="d-flex flex-column justify-content-center">
+                <a class="mx-auto text-primary" href="{% url "schema-swagger-ui" %}" target="_blank">
+                    <img src="{{ item.image_url }}" alt="{{ item.category }}"
+                         class="mx-auto rounded-circle img-fluid category-circle"
+                    />
+                </a>
+                <p class="text-center">{{ item.category }}</p>
             </div>
         {% endfor %}
         {#        <div class="item">#}
