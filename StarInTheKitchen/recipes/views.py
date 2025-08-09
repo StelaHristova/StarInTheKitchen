@@ -1,8 +1,6 @@
-
-from django.forms import inlineformset_factory
 from django.db.models import Q
 from django.http import Http404, HttpResponseForbidden
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
@@ -30,7 +28,6 @@ class RecipeListView(ListView):
 
     def get_queryset(self):
         user = self.request.user
-        # queryset = Recipe.objects.all()
 
         if user.is_authenticated:
             queryset = Recipe.objects.filter(
@@ -98,11 +95,7 @@ class RecipeDetailView(DetailView):
                 context['review_form'] = None
             else:
                 context['review_form'] = ReviewForm()
-            # try:
-            #     review = Review.objects.get(user=self.request.user, recipe=recipe)
-            #     context['review_form'] = ReviewForm(instance=review)
-            # except Review.DoesNotExist:
-            #     context['review_form'] = ReviewForm()
+
         else:
             context['is_favourited'] = False
             context['can_review'] = False
@@ -127,19 +120,9 @@ class RecipeDetailView(DetailView):
             new_review.save()
             return redirect('recipe-detail', pk=self.object.pk)
 
-        # if invalid, re-render with the form and context
         context = self.get_context_data()
         context['review_form'] = form
         return self.render_to_response(context)
-    #     context = super().get_context_data(**kwargs)
-    #     recipe = self.object
-    #
-    #     if self.request.user.is_authenticated:
-    #         context['is_favourited'] = recipe.favourited_by.filter(user=self.request.user).exists()
-    #     else:
-    #         context['is_favourited'] = False
-    #
-    #     return context
 
 
 class RecipeCreateView(LoginRequiredMixin, CreateView):

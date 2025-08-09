@@ -32,10 +32,3 @@ class RecipeForm(forms.ModelForm):
             'occasions': forms.CheckboxSelectMultiple,
         }
 
-    # def form_valid(self, form):
-    #     form.instance.created_by = self.request.user
-    #     return super().form_valid(form)
-
-    # def __init__(self, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)
-    #     self.fields['description'].required = False

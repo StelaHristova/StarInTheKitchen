@@ -19,12 +19,10 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
     )
 
     is_staff = models.BooleanField(
-        # _("staff status"),
         default=False,
-        # help_text=_("Designates whether the user can log into this admin site.")
     )
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = []  # Not really needed, but just in case
+    REQUIRED_FIELDS = []
 
     objects = AppUserManager()

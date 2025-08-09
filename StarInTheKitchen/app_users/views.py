@@ -103,35 +103,11 @@ class ProfileDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 class StaffOnlyView(UserPassesTestMixin):
     def test_func(self):
         return self.request.user.groups.filter(name='staff_admins').exists()
-#
-#     def get_success_url(self):
-#         return reverse_lazy('profile-details-update', kwargs={
-#             'pk': self.object.id
-#         })
-#
-#
-# def delete_profile_view(request):
-#     if not request.user.is_authenticated:
-#         raise Http404()
-#
-#     user_profile = request.user.profile
-#     form = DeleteAppUserForm(instance=user_profile)
-#     form.fields['email'].initial = user_profile.user.email
-#
-#     if request.method == "POST":
-#         request.user.delete()
-#         return redirect('home-page')
-#
-#
-#     return render(request, 'app_users/delete_profile.html', context=context)
-#
 
 
-#
 def logout_view(request):
     if request.user.is_authenticated:
         logout(request)
 
     return redirect('home-page')
-#
-#
+

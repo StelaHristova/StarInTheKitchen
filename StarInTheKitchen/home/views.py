@@ -2,14 +2,13 @@ from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
 from django.db.models import Avg
-from django.shortcuts import render
 from django.views.generic import TemplateView
 from asgiref.sync import sync_to_async
 
 from StarInTheKitchen.recipes.models import Recipe
 from StarInTheKitchen.reviews.models import Review
 from StarInTheKitchen.categories.models import MealType, Season, Diet, CookingMethod, Occasion
-from django.utils.timezone import now
+
 
 User = get_user_model()
 
@@ -76,10 +75,10 @@ def get_latest_recipes():
         .values('title', 'created_by__email', 'created_at')
     )
 
+
 async def latest_recipes_view(request):
     recipes = await get_latest_recipes()
 
-    # Преобразуваме датите в четим формат
     for r in recipes:
         r['created_at'] = r['created_at'].strftime("%Y-%m-%d %H:%M")
 

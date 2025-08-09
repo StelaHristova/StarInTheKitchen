@@ -4,6 +4,7 @@ from .forms import ReviewForm
 from .models import Review
 from StarInTheKitchen.recipes.models import Recipe
 
+
 @login_required
 def submit_review(request, pk):
     recipe = get_object_or_404(Recipe, pk=pk)

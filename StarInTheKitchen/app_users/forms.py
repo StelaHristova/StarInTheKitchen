@@ -4,8 +4,6 @@ from django.contrib.auth import forms as auth_forms, get_user_model, login
 from django.core.exceptions import ValidationError
 from PIL import Image
 from django.forms import ClearableFileInput
-from django.shortcuts import redirect
-from django.utils.translation import gettext_lazy as _
 
 from StarInTheKitchen.app_users.validators import last_name_validator, first_name_validator
 from StarInTheKitchen.app_users.widgets import CustomClearableFileInput
@@ -51,11 +49,6 @@ class AppUserForm(auth_forms.UserCreationForm):
 
         return user
 
-    # def form_valid(self, form):
-    #     user = form.save()
-    #     login(self.request, user)
-    #     return redirect('home-page')
-
 
 class EditAppUserForm(forms.ModelForm):
     email = forms.EmailField(required=False)
@@ -81,9 +74,6 @@ class EditAppUserForm(forms.ModelForm):
         if profile_pic and hasattr(profile_pic, 'public_id'):
             is_default = 'default_profile_picture' in profile_pic.public_id or "default-user" in profile_pic.public_id
         self.fields['profile_picture'].widget = CustomClearableFileInput(is_default=is_default)
-        # if self.instance.profile_picture and 'default_profile_picture' in str(self.instance.profile_picture):
-        #     self.fields['profile_picture'].widget.clear_checkbox_label = ''
-        #     self.fields['profile_picture'].widget.attrs['hidden-clear'] = 'true'
 
     def clean_profile_picture(self):
         profile_picture = self.cleaned_data['profile_picture']
