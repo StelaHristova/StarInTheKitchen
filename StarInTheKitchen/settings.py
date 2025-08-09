@@ -29,6 +29,7 @@ PROJECT_MADE_APPS = [
     'StarInTheKitchen.home',
     'StarInTheKitchen.recipes',
     'StarInTheKitchen.reviews',
+    'StarInTheKitchen.common',
 ]
 
 INSTALLED_APPS = [

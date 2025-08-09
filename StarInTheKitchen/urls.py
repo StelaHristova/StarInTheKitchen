@@ -1,7 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('StarInTheKitchen.app_users.urls')),
@@ -13,3 +12,6 @@ urlpatterns = [
     path('api/', include('StarInTheKitchen.api.urls')),
 
 ]
+
+handler403 = 'StarInTheKitchen.common.views.permission_denied_view'
+handler404 = 'StarInTheKitchen.common.views.page_not_found_view'

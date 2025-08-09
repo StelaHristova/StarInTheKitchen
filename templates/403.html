@@ -1,0 +1,19 @@
+{% extends  'index.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="container py-5">
+        <div class="text-center">
+            <h1 class="display-5 fw-bold">403 Forbidden</h1>
+            <p class="lead mt-3">
+                {{ reason|default:"You don't have permission to perform this action." }}
+            </p>
+            <div class="mt-4">
+                <a href="javascript:history.back()" class="btn btn-outline-secondary me-2">Go back</a>
+                <a href="{% url 'home-page' %}" class="btn btn-primary">Go to Home</a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,3 +1,4 @@
+from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.http import Http404, HttpResponseForbidden
 from django.shortcuts import redirect
@@ -147,6 +148,9 @@ class RecipeUpdateView(LoginRequiredMixin, UpdateView):
     form_class = RecipeForm
     template_name = 'recipes/recipe_form.html'
 
+    def get_queryset(self):
+        return Recipe.objects.filter(created_by=self.request.user)
+
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.save()
@@ -157,10 +161,7 @@ class RecipeUpdateView(LoginRequiredMixin, UpdateView):
         recipe = self.get_object()
 
         if recipe.is_approved:
-            return HttpResponseForbidden("You cannot edit an approved recipe.")
-
-        if recipe.created_by != self.request.user:
-            return HttpResponseForbidden("You can only edit your own recipes.")
+            raise PermissionDenied("You cannot edit an approved recipe.")
 
         return super().dispatch(request, *args, **kwargs)
 
