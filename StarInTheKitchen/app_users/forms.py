@@ -6,21 +6,32 @@ from PIL import Image
 from django.forms import ClearableFileInput
 from django.shortcuts import redirect
 from django.utils.translation import gettext_lazy as _
+
+from StarInTheKitchen.app_users.validators import last_name_validator, first_name_validator
 from StarInTheKitchen.app_users.widgets import CustomClearableFileInput
 from StarInTheKitchen.app_users.models import Profile
 import cloudinary.uploader
+from django.core import validators
 UserModel = get_user_model()
 
 
 class AppUserForm(auth_forms.UserCreationForm):
     first_name = forms.CharField(
         max_length=150,
-        min_length=2
+        min_length=2,
+        validators=[
+            validators.MinLengthValidator(2, message="First name needs to be at least 2 characters long."),
+            first_name_validator
+        ],
     )
 
     last_name = forms.CharField(
         max_length=150,
-        min_length=2
+        min_length=2,
+        validators=[
+            validators.MinLengthValidator(2, message="Last name needs to be at least 2 characters long."),
+            last_name_validator
+        ]
     )
 
     class Meta:
