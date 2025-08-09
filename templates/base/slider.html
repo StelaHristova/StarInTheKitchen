@@ -25,7 +25,7 @@
 
                                         <div class="form-group col-lg-2">
                                             <select class="form-control" name="meal_type" multiple>
-                                                <option disabled selected hidden>Meal Type</option>
+                                                <option selected value="">Meal Type</option>
                                                 {% for mt in meal_types %}
                                                     <option value="{{ mt.id }}">{{ mt.name }}</option>
                                                 {% endfor %}
@@ -34,8 +34,7 @@
 
                                         <div class="form-group col-lg-2">
                                             <select class="form-control" name="season" multiple>
-                                                <option disabled selected hidden
-                                                ">Season</option>
+                                                <option selected value="">Season</option>
                                                 {% for s in seasons %}
                                                     <option value="{{ s.id }}">{{ s.name }}</option>
                                                 {% endfor %}
@@ -44,8 +43,7 @@
 
                                         <div class="form-group col-lg-2">
                                             <select class="form-control" name="diet" multiple>
-                                                <option disabled selected hidden
-                                                ">Diet</option>
+                                                <option selected value="">Diet</option>
                                                 {% for d in diets %}
                                                     <option value="{{ d.id }}">{{ d.name }}</option>
                                                 {% endfor %}
@@ -54,7 +52,7 @@
 
                                         <div class="form-group col-lg-2">
                                             <select class="form-control" name="cooking_method" multiple>
-                                                <option disabled selected hidden>Method</option>
+                                                <option selected value="">Method</option>
                                                 {% for m in methods %}
                                                     <option value="{{ m.id }}">{{ m.name }}</option>
                                                 {% endfor %}
