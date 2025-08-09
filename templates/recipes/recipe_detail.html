@@ -75,11 +75,11 @@
 
         <p><strong>Created by:</strong> {{ recipe.created_by }}</p>
 
-        {% if not recipe.is_approved and user.is_authenticated %}
+        {% if not recipe.is_approved and user.is_authenticated and recipe.created_by == user %}
             <p class="text-warning"><strong>This recipe is not yet approved.</strong></p>
         {% endif %}
 
-        {% if recipe.is_approved and user.is_authenticated %}
+        {% if recipe.is_approved and user.is_authenticated  and recipe.created_by == user %}
             <p class="text-success"><strong>This recipe has been approved and can no longer be edited.</strong></p>
         {% endif %}
 
