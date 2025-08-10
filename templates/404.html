@@ -2,16 +2,13 @@
 {% load static %}
 
 {% block content %}
-<div class="container py-5">
-  <div class="text-center">
-    <h1 class="display-5 fw-bold">404 Not Found</h1>
-{#    <p class="lead mt-3">#}
-{#      The page you’re looking for doesn’t exist or has been moved.#}
-{#    </p>#}
-    <div class="mt-4">
-      <a href="javascript:history.back()" class="btn btn-outline-secondary me-2">Go back</a>
-      <a href="{% url 'home-page' %}" class="btn btn-primary">Go to Home</a>
+    <div class="container py-5">
+        <div class="text-center">
+            <h1 class="display-5 fw-bold">404 Not Found</h1>
+            <div class="mt-4">
+                <a href="javascript:history.back()" class="btn btn-outline-secondary me-2">Go back</a>
+                <a href="{% url 'home-page' %}" class="btn btn-primary">Go to Home</a>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 {% endblock %}
