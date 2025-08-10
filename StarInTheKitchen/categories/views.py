@@ -7,4 +7,4 @@ from StarInTheKitchen.categories.models import MealType
 class MealTypeListView(ListView):
     model = MealType
     template_name = 'categories/mealtype_list.html'
-    content_type = 'mealtypes'
+    context_object_name = 'mealtypes'
