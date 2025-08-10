@@ -2,7 +2,7 @@
 A Django application for discovering, creating, reviewing and saving cooking recipes. Users can browse public recipes and categories, register/login, create and manage their own recipes, add favourites, write reviews, and more. Admins can moderate and approve recipes via a customized admin.
 
 ## 🚀  Live Demo - [StarInTheKitchen](https://starinthekitchen-abhrgdgec6b6cada.italynorth-01.azurewebsites.net/)
-<hr>
+
 Api Docs:
 
 	* Swagger UI: /api/docs/
@@ -42,7 +42,7 @@ Users:
 * Email: superadmins@email.com; password:123superadmin (super_admins)
 
 # Features
-<hr>
+
 ### 🔐  Authentication
 * Register: Users can register, providing Email, First Name, Last Name, Password and Confirm Password - error messages are displayed if the values are not in the correct format.
 * Login: Users can log in to their account after it has been created. 
@@ -79,7 +79,6 @@ All pages are described in detail below ⬇️
 * Links to the Swagger and Redoc documentation.
 
 # Pages
-<hr>
 
 ### 🏠 Home Page
 * Search form: Search recipes by name and categories (public).
@@ -131,7 +130,6 @@ He can also Edit and Delete this data (except of his email address)
 
 
 # Technologies
-<hr>
 
 * Python: Core language for functionality.
 * Django: Python-based framework.
@@ -143,7 +141,6 @@ He can also Edit and Delete this data (except of his email address)
 * Pillow: Validate if a file is an image.
 * Whitenoise: Serves static files.
 
-<hr>
 ## 📬  Contact
 Questions and suggestions are welcome: starinthekitchenchef@gmail.com
 
